@@ -6,6 +6,7 @@ import 'tippy.js/animations/scale.css'
 
 import classnames from 'classnames/bind'
 import styles from './Navigation.module.scss'
+import { BarIcon, EnvelopIcon } from '~/components/Icons'
 
 const cx = classnames.bind(styles)
 
@@ -15,7 +16,8 @@ function Navigation() {
             <div className={cx('content')}>
                 <div className={cx('category')}>
                     <div className={cx('category-menu')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faBars} />
+                        <BarIcon className={cx('icon')} />
+                        {/* <FontAwesomeIcon className={cx('icon')} icon={faBars} /> */}
                         <span>Danh mục sản phẩm</span>
                     </div>
 
@@ -157,7 +159,8 @@ function Navigation() {
                     </div>
 
                     <div className={cx('action-details')}>
-                        <FontAwesomeIcon className={cx('icon')} icon={faEnvelope} />
+                        <EnvelopIcon className={cx('icon')} />
+                        {/* <FontAwesomeIcon className={cx('icon')} icon={faEnvelope} /> */}
                         <span>Tin tức cửa hàng</span>
                     </div>
 

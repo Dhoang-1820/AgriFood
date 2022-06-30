@@ -93,8 +93,10 @@
     cursor: pointer;
 
     .icon-search {
+        position: absolute;
+        top: 8px;
+        right: 14px;
         color: var(--primary);
-        font-size: 1.6rem;
     }
 
     &:hover {
@@ -114,8 +116,9 @@
 
 .actions-icon {
     margin-right: 7px;
-    font-size: 2.6rem;
-    color: var(--white);
+    font-size: 3rem;
+    color: white;
+    // color: var(--white);
 }
 
 .actions-text {
@@ -147,17 +150,17 @@
 
 .account-menu {
     position: absolute;
-    top: 35px;
-    right: -50px;
+    top: 40px;
+    right: -48px;
     min-width: 190px;
     list-style: none;
     background-color: var(--white);
     box-shadow: var(--box-shadow);
+    color: #000;
 
     span {
         font-size: 1.3rem;
         padding: 0 15px;
-        color: #666666;
     }
 
     &::before {
@@ -174,7 +177,7 @@
         border-top: var(--boder-line);
     }
 
-    & li:last-child:hover > span {
+    & li:last-child:hover {
         color: var(--red-color);
     }
 
@@ -202,7 +205,7 @@
     position: absolute;
     width: 350px;
     background-color: var(--white);
-    top: 36px;
+    top: 38px;
     right: -72px;
     box-shadow: var(--box-shadow);
     // padding: 12px 16px;
@@ -264,7 +267,7 @@
     color: var(--red-color);
 
     &:hover {
-        opacity: 0.9;
+        background-color: rgba(0, 0, 0, 0.04);
     }
 }
 
@@ -299,6 +302,7 @@
 }
 
 .menu-icon {
+    font-size: 2rem;
+    color: var(--black);
     margin-left: 12px;
-    width: 18px;
 }

@@ -11,7 +11,7 @@ import {
     faSignOut,
 } from '@fortawesome/free-solid-svg-icons'
 import Tippy from '@tippyjs/react/headless'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
 
 import classnames from 'classnames/bind'
@@ -20,7 +20,16 @@ import images from '~/assets/images'
 import ResultItem from './ResultItem'
 import CartItem from './CartItem'
 import Navigation from './Navigation'
-import Slider from './Slideder'
+import {
+    CartIcon,
+    UserIcon,
+    MapMakerIcon,
+    UserSolidIcon,
+    TruckIcon,
+    LogoutIcon,
+    WalletIcon,
+    SearchIcon,
+} from '~/components/Icons'
 
 const cx = classnames.bind(styles)
 
@@ -33,9 +42,23 @@ function Header() {
         }, 0)
     }, [])
 
+    const headerRef = useRef()
+
+    useEffect(() => {
+        document.onscroll = () => {
+            const scrollTop = document.documentElement.scrollTop || window.scrollY
+            headerRef.current.style.transition = 'all 1s'
+            if (scrollTop >= 600) {
+                headerRef.current.style.height = 50 + 'px'
+            } else {
+                headerRef.current.style.height = 80 + 'px'
+            }
+        }
+    }, [])
+
     return (
         <div className={cx('header')}>
-            <header className={cx('wrapper')}>
+            <header className={cx('wrapper')} ref={headerRef}>
                 <div className={cx('content')}>
                     <div className={cx('logo')}>
                         <a href='/'>
@@ -67,39 +90,40 @@ function Header() {
                             </button>
                             <FontAwesomeIcon className={cx('loading')} icon={faSpinner} />
                             <button className={cx('btn-search')}>
-                                <FontAwesomeIcon icon={faSearch} className={cx('icon-search')} />
+                                <SearchIcon className={cx('icon-search')} />
+                                {/* <FontAwesomeIcon icon={faSearch} className={cx('icon-search')} /> */}
                             </button>
                         </div>
                     </Tippy>
                     <div className={cx('actions')}>
                         <div className={cx('account')}>
-                            <FontAwesomeIcon icon={faUserCircle} className={cx('actions-icon')} />
+                            <UserIcon className={cx('actions-icon')} />
                             <span className={cx('actions-text')}>HoangHuy</span>
                             <ul className={cx('account-menu')}>
                                 <li className={cx('menu-item')}>
-                                    <FontAwesomeIcon className={cx('menu-icon')} icon={faUser} />
+                                    <UserSolidIcon className={cx('menu-icon')} />
                                     <span>Tài khoản</span>
                                 </li>
                                 <li className={cx('menu-item')}>
-                                    <FontAwesomeIcon className={cx('menu-icon')} icon={faTruck} />
+                                    <TruckIcon className={cx('menu-icon')} />
                                     <span>Quản lý đơn hàng</span>
                                 </li>
                                 <li className={cx('menu-item')}>
-                                    <FontAwesomeIcon className={cx('menu-icon')} icon={faMapMarkerAlt} />
+                                    <MapMakerIcon className={cx('menu-icon')} width={'2rem'} height={'2rem'} />
                                     <span>Sổ địa chỉ</span>
                                 </li>
                                 <li className={cx('menu-item')}>
-                                    <FontAwesomeIcon className={cx('menu-icon')} icon={faWallet} />
+                                    <WalletIcon className={cx('menu-icon')} />
                                     <span>Lịch sử giao dịch</span>
                                 </li>
                                 <li className={cx('menu-item')}>
-                                    <FontAwesomeIcon className={cx('menu-icon')} icon={faSignOut} />
+                                    <LogoutIcon className={cx('menu-icon')} />
                                     <span>Đăng xuất</span>
                                 </li>
                             </ul>
                         </div>
                         <div className={cx('cart')}>
-                            <FontAwesomeIcon icon={faShoppingBasket} className={cx('actions-icon')} />
+                            <CartIcon className={cx('actions-icon')} />
                             <span className={cx('actions-text')}>Giỏ hàng</span>
                             <div className={cx('cart-list')}>
                                 <div className={cx('list-item')}>
@@ -128,7 +152,7 @@ function Header() {
                             </div>
                         </div>
                         <div className={cx('locations')}>
-                            <FontAwesomeIcon icon={faMapMarkerAlt} className={cx('actions-icon')} />
+                            <MapMakerIcon className={cx('actions-icon')} />
                             <span className={cx('actions-text')}>Đăk Lăk</span>
                         </div>
                     </div>
