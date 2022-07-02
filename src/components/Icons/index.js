@@ -102,7 +102,6 @@ export const SearchIcon = ({ width = '2.2rem', height = '2.2rem ', className }) 
         height={height}
         viewBox='0 0 14 14'
         fill='currentColor'
-        // style={{ marginLeft: '16px', marginRight: '12px', cursor: 'pointer' }}
     >
         <path
             d='M14.771,12.752,11.32,9.286a5.519,5.519,0,0,0,1.374-3.634A5.763,5.763,0,0,0,6.839,0,5.763,5.763,0,0,0,.984,5.652,5.763,5.763,0,0,0,6.839,11.3a5.936,5.936,0,0,0,3.354-1.023l3.477,3.492a.783.783,0,0,0,1.08.02A.72.72,0,0,0,14.771,12.752ZM6.839,1.475a4.259,4.259,0,0,1,4.327,4.178A4.259,4.259,0,0,1,6.839,9.83,4.259,4.259,0,0,1,2.511,5.652,4.259,4.259,0,0,1,6.839,1.475Z'
@@ -120,5 +119,31 @@ export const BarIcon = ({ width = '2.4rem', height = '2.4rem ', className }) => 
 export const EnvelopIcon = ({ width = '2rem', height = '2rem ', className }) => (
     <svg className={className} width={width} height={height} focusable='false' viewBox='0 0 24 24' aria-hidden='true'>
         <path d='M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8l8 5 8-5v10zm-8-7L4 6h16l-8 5z'></path>
+    </svg>
+)
+
+export const MinusIcon = ({ width = '2rem', height = '2rem ', className }) => (
+    <svg
+        className={className}
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 16 16'
+        width={width}
+        height={height}
+        fill='currentColor'
+    >
+        <path d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z'></path>
+    </svg>
+)
+
+export const PlusIcon = ({ width = '2rem', height = '2rem ', className }) => (
+    <svg
+        className={className}
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 16 16'
+        width={width}
+        height={height}
+        fill='currentColor'
+    >
+        <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'></path>
     </svg>
 )

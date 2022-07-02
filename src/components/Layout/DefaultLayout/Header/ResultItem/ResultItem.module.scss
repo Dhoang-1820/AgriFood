@@ -1,7 +1,7 @@
 .wrapper {
     display: flex;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 12px;
     cursor: pointer;
 
     &:hover {
@@ -9,9 +9,10 @@
     }
 }
 
-.img {  
+.img {
     width: 65px;
     height: 65px;
+    object-fit: contain;
     margin-left: 3px;
 }
 
