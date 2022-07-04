@@ -10,6 +10,7 @@
 
     --default-layout-width: 1180px;
     --default-header-height: 80px;
+    --default-navigation-height: 40px;
 
     --box-shadow: #00000033 0px 5px 5px -3px, #00000024 0px 8px 10px 1px, #0000001f 0px 3px 14px 2px;
 }
@@ -80,5 +81,38 @@ body {
 
     .react-multiple-carousel__arrow--left {
         left: 1px;
+    }
+}
+
+.scrollbar-custom {
+    // Scrollbar CSS
+    &::-webkit-scrollbar {
+        border-radius: 0;
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar {
+        border-radius: 0;
+        width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        border-radius: 4px;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    &::-webkit-scrollbar-track {
+        border-radius: 0;
+        background-color: rgba(0, 0, 0, 0);
     }
 }

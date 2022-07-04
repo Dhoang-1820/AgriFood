@@ -1,6 +1,6 @@
-import Header from './Header'
 import Footer from './Footer'
-import Slider from './Header/Slideder'
+import Header from './Header'
+import Navigation from './Header/Navigation'
 
 import classNames from 'classnames/bind'
 import styles from './DefaultLayout.module.scss'
@@ -12,7 +12,6 @@ function DefaultLayout({ children }) {
         <div className={cx('wrapper')}>
             <Header />
             <div className={cx('container')}>
-                {/* <Slider /> */}
                 <div className={cx('content')}>{children}</div>
             </div>
             <Footer />

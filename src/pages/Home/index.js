@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import * as categoryServices from '~/apiServices/categoryServices'
 
 import Category from './Category'
 import Slider from '~/components/Layout/DefaultLayout/Header/Slideder'
@@ -11,12 +12,11 @@ function Home() {
     const [categories, setCategories] = useState([])
 
     useEffect(() => {
-        const categoryAPI = 'http://localhost:3000/category'
-        fetch(categoryAPI)
-            .then((response) => response.json())
-            .then((categories) => {
-                setCategories(categories)
-            })
+        const fechAPI = async () => {
+            const result = await categoryServices.getCategory()
+            setCategories(result)
+        }
+        fechAPI()
     }, [])
     return (
         <>

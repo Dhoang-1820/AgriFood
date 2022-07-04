@@ -1,7 +1,10 @@
-import classNames from 'classnames/bind'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { CartIcon, MinusIcon, PlusIcon } from '~/components/Icons'
+
+import * as productServices from '~/apiServices/productServices'
+
+import classNames from 'classnames/bind'
 import styles from './ProductDetails.module.scss'
 const cx = classNames.bind(styles)
 
@@ -9,20 +12,23 @@ function ProductDetails() {
     const [details, setDetails] = useState([])
     const param = useParams()
 
-    const API = `http://localhost:3000/productDetails?code=${param.id}`
-
     useEffect(() => {
-        fetch(API)
-            .then((response) => response.json())
-            .then((productDetail) => setDetails(...productDetail))
+        const fechAPI = async () => {
+            const result = await productServices.getProductDetails(param.id)
+            setDetails(...result)
+        }
+        fechAPI()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('product')}>
                 <div className={cx('product-image')}>
-                    <img src={details.image}></img>
+                    <img src={details.image} alt={details.name}></img>
                     <div className={cx('list-image')}></div>
                 </div>
+
                 <div className={cx('product-details')}>
                     <h3 className={cx('product-name')}>{details.name}</h3>
                     <p>Hãy là người đầu tiên đánh giá sản phẩm này!</p>

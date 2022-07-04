@@ -7,7 +7,6 @@ import { CartIcon, LogoutIcon, MapMakerIcon, TruckIcon, UserIcon, UserSolidIcon,
 import CartItem from './CartItem'
 import Navigation from './Navigation'
 import Search from './Search'
-
 import classnames from 'classnames/bind'
 import styles from './Header.module.scss'
 
@@ -29,8 +28,8 @@ function Header() {
     }, [])
 
     return (
-        <div className={cx('header')}>
-            <header className={cx('wrapper')} ref={headerRef}>
+        <header className={cx('header')}>
+            <div className={cx('wrapper')} ref={headerRef}>
                 <div className={cx('content')}>
                     <div className={cx('logo')}>
                         <Link to={'/'}>
@@ -70,7 +69,7 @@ function Header() {
                             <CartIcon className={cx('actions-icon')} />
                             <span className={cx('actions-text')}>Giỏ hàng</span>
                             <div className={cx('cart-list')}>
-                                <div className={cx('list-item')}>
+                                <div className={cx('list-item', 'scrollbar-custom')}>
                                     <CartItem />
                                     <CartItem />
                                     <CartItem />
@@ -101,9 +100,9 @@ function Header() {
                         </div>
                     </div>
                 </div>
-            </header>
+            </div>
             <Navigation />
-        </div>
+        </header>
     )
 }
 
