@@ -43,6 +43,7 @@ function CartItem({ item }) {
                         value={quantity}
                         onChange={(e) => setQuantity(e.target.value)}
                         type='text'
+                        readOnly
                         className={cx('input-text')}
                         maxLength={2}
                         max={99}

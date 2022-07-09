@@ -1,4 +1,5 @@
 import { LogoutIcon, MapMakerIcon, TruckIcon, UserIcon, UserSolidIcon, WalletIcon } from '~/components/Icons'
+import { Link } from 'react-router-dom'
 
 import classnames from 'classnames/bind'
 import styles from './Account.module.scss'
@@ -12,8 +13,10 @@ function Account() {
             <span className={cx('actions-text')}>HoangHuy</span>
             <ul className={cx('account-menu')}>
                 <li className={cx('menu-item')}>
-                    <UserSolidIcon className={cx('menu-icon')} />
-                    <span>Tài khoản</span>
+                    <Link to='/user'>
+                        <UserSolidIcon className={cx('menu-icon')} />
+                        <span>Tài khoản</span>
+                    </Link>
                 </li>
                 <li className={cx('menu-item')}>
                     <TruckIcon className={cx('menu-icon')} />

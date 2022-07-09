@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 const cx = classnames.bind(styles)
 
 function CartItem({ item, link }) {
-    console.log(link)
     return (
         <Link to={link} className={cx('wrapper')}>
             <div className={cx('product-img')}>

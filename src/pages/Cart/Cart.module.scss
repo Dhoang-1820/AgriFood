@@ -16,6 +16,13 @@
     margin: 0px;
 }
 
+.input-text {
+    &:focus {
+        outline: none;
+        border: 1px solid rgb(232, 232, 232);
+    }
+}
+
 .quantity {
     display: flex;
     align-items: center;

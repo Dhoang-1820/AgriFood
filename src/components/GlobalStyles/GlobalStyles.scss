@@ -83,6 +83,34 @@ body {
     .react-multiple-carousel__arrow--left {
         left: 1px;
     }
+
+    //Custom datepicker
+    .react-datepicker {
+        font-size: 1.2rem;
+
+        .react-datepicker__day {
+            width: 2.7rem;
+            line-height: 2.7rem;
+        }
+
+        .react-datepicker__day-name {
+            width: 2.7rem;
+            padding-bottom: 5px;
+            padding-top: 12px;
+        }
+
+        .react-datepicker__current-month {
+            padding-bottom: 3px;
+            font-size: 1.4rem;
+        }
+    }
+
+    .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before,
+    .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::after,
+    .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle::before,
+    .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle::after {
+        left: -110px;
+    }
 }
 
 .scrollbar-custom {

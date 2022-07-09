@@ -5,12 +5,12 @@ import { CartIcon, MapMakerIcon } from '~/components/Icons'
 import Account from './Account'
 import CartItem from './CartItem'
 import Navigation from './Navigation'
-import Search from './Search'
+import Search from './Search/Search'
 
 import classnames from 'classnames/bind'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
-import AccountLogin from './AccountLogin'
+import AccountLogin from './AccountLogin/AccountLogin'
 import * as cartServices from '~/apiServices/cartServices'
 import FormatCurrency from '~/commonServices/FormatCurrency'
 
@@ -18,7 +18,7 @@ const cx = classnames.bind(styles)
 
 function Header() {
     const headerRef = useRef()
-    const isLogin = false
+    const isLogin = true
 
     useEffect(() => {
         document.onscroll = () => {

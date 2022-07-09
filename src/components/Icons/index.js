@@ -199,3 +199,17 @@ export const WarningIcon = ({ width = '2rem', height = '2rem ', className }) => 
         <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
     </svg>
 )
+
+export const PaperIcon = ({ width = '2rem', height = '2rem ', className }) => (
+    <svg
+        className={className}
+        width={width}
+        height={height}
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 16 16'
+        fill='currentColor'
+    >
+        <path d='M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5z'></path>
+        <path d='M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5L9.5 0zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h5.5z'></path>
+    </svg>
+)
