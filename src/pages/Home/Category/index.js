@@ -1,5 +1,7 @@
-import Product from '../Product'
+import Product from '../../components/Product'
 
+import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import classNames from 'classnames/bind'
 import styles from '../Home.module.scss'
 
@@ -15,7 +17,12 @@ function Category({ category }) {
                 {category.products && category.products.map((item, index) => <Product key={index} product={item} />)}
             </div>
             <div className={cx('product-footer')}>
-                <button className={cx('product-btn')}>Xem thêm 33 sản phẩm {category.title}</button>
+                <div className={cx('product-show-more')}>
+                    <div>
+                        Xem thêm 33 sản phẩm <strong>{category.title}</strong>
+                    </div>
+                    <FontAwesomeIcon icon={faAngleDown} className={cx('product-show-more__icon')} />
+                </div>
             </div>
         </div>
     )

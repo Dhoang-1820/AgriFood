@@ -1,19 +1,21 @@
 import classNames from 'classnames/bind'
-import styles from '../Home.module.scss'
+import styles from './Product.module.scss'
 
 import { Link } from 'react-router-dom'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/animations/scale-subtle.css'
 
-import ChangeToSlug from '~/components/Services/ChangeToSlug'
+import ChangeToSlug from '~/commonServices/ChangeToSlug'
+import Button from '~/components/Button'
+import FormatCurrency from '~/commonServices/FormatCurrency'
 
 const cx = classNames.bind(styles)
 
-function Product({ product }) {
+function Product({ product, FourCol = false }) {
     return (
-        <div className={cx('product-col-2-4')}>
+        <div className={FourCol ? cx('product-col-4') : cx('product-col-5')}>
             <div className={cx('product-item')}>
-                <Link to={`products/${ChangeToSlug(product.name)}--${product.code}`}>
+                <Link to={`/products/${ChangeToSlug(product.name)}--${product.code}`}>
                     <div className={cx('product-image')}>
                         <img src={product.image} alt={product.name}></img>
                     </div>
@@ -24,16 +26,15 @@ function Product({ product }) {
                         duration={[100, 100]}
                         content={<div className={cx('tooltip')}>{product.name}</div>}
                     >
-                        <Link to={`products/${product.name}--${product.code}`}>
+                        <Link to={`/products/${product.name}--${product.code}`}>
                             <h2 className={cx('product-name')}>{product.name}</h2>
                         </Link>
                     </Tippy>
                     <h3 className={cx('product-unit')}>ĐVT: {product.unit}</h3>
-                    <div className={cx('product-price')}>
-                        {product.price}&nbsp;<span>₫</span>
-                    </div>
+                    <div className={cx('product-price')}>{FormatCurrency(product.price)}</div>
+                    {/* <span className={cx('product-price-origin')}>{FormatCurrency(product.price)}</span> */}
                 </div>
-                <button className={cx('product-btn')}>Thêm vào giỏ</button>
+                <Button outLine>Thêm vào giỏ</Button>
             </div>
         </div>
     )

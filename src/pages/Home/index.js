@@ -21,7 +21,7 @@ function Home() {
     return (
         <>
             <Slider />
-            {categories.map((category, index) => (
+            {categories?.map((category, index) => (
                 <Category key={index} category={category} />
             ))}
         </>

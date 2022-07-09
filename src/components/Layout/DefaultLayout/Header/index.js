@@ -1,19 +1,24 @@
-import images from '~/assets/images'
-
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useEffect, useRef } from 'react'
-import { CartIcon, LogoutIcon, MapMakerIcon, TruckIcon, UserIcon, UserSolidIcon, WalletIcon } from '~/components/Icons'
+import { CartIcon, MapMakerIcon } from '~/components/Icons'
 
+import Account from './Account'
 import CartItem from './CartItem'
 import Navigation from './Navigation'
 import Search from './Search'
+
 import classnames from 'classnames/bind'
+import images from '~/assets/images'
 import styles from './Header.module.scss'
+import AccountLogin from './AccountLogin'
+import * as cartServices from '~/apiServices/cartServices'
+import FormatCurrency from '~/commonServices/FormatCurrency'
 
 const cx = classnames.bind(styles)
 
 function Header() {
     const headerRef = useRef()
+    const isLogin = false
 
     useEffect(() => {
         document.onscroll = () => {
@@ -27,6 +32,17 @@ function Header() {
         }
     }, [])
 
+    const [carts, setCarts] = useState([])
+    useEffect(() => {
+        const fechAPI = async () => {
+            const result = await cartServices.getCarts()
+            setCarts(result)
+        }
+        fechAPI()
+    }, [])
+
+    const productTotal = carts.reduce((total, current) => total + current.quantity, 0)
+    const moneyTotal = FormatCurrency(carts.reduce((total, current) => total + current.quantity * current.price, 0))
     return (
         <header className={cx('header')}>
             <div className={cx('wrapper')} ref={headerRef}>
@@ -36,61 +52,38 @@ function Header() {
                             <img src={images.logo} alt='logo' className={cx('logo-img')} />
                         </Link>
                     </div>
-                    {/* search */}
                     <Search />
                     <div className={cx('actions')}>
-                        <div className={cx('account')}>
-                            <UserIcon className={cx('actions-icon')} />
-                            <span className={cx('actions-text')}>HoangHuy</span>
-                            <ul className={cx('account-menu')}>
-                                <li className={cx('menu-item')}>
-                                    <UserSolidIcon className={cx('menu-icon')} />
-                                    <span>Tài khoản</span>
-                                </li>
-                                <li className={cx('menu-item')}>
-                                    <TruckIcon className={cx('menu-icon')} />
-                                    <span>Quản lý đơn hàng</span>
-                                </li>
-                                <li className={cx('menu-item')}>
-                                    <MapMakerIcon className={cx('menu-icon')} width={'2rem'} height={'2rem'} />
-                                    <span>Sổ địa chỉ</span>
-                                </li>
-                                <li className={cx('menu-item')}>
-                                    <WalletIcon className={cx('menu-icon')} />
-                                    <span>Lịch sử giao dịch</span>
-                                </li>
-                                <li className={cx('menu-item')}>
-                                    <LogoutIcon className={cx('menu-icon')} />
-                                    <span>Đăng xuất</span>
-                                </li>
-                            </ul>
-                        </div>
+                        {!isLogin ? <AccountLogin /> : <Account />}
+
                         <div className={cx('cart')}>
-                            <CartIcon className={cx('actions-icon')} />
-                            <span className={cx('actions-text')}>Giỏ hàng</span>
+                            <Link to='/cart' className={cx('btn-cart')}>
+                                <CartIcon className={cx('actions-icon')} />
+                                <span className={cx('actions-text')}>Giỏ hàng ({carts.length})</span>
+                            </Link>
                             <div className={cx('cart-list')}>
+                                <h5 className={cx('cart-list-heading')}>Sản phẩm đã thêm</h5>
                                 <div className={cx('list-item', 'scrollbar-custom')}>
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
-                                    <CartItem />
+                                    {carts.map((product) => (
+                                        <CartItem key={product.code} item={product} link='/cart' />
+                                    ))}
                                 </div>
                                 <div className={cx('cart-total')}>
                                     <span className={cx('total-quantity')}>
-                                        Có tổng số <b>5</b> sản phẩm
+                                        Có tổng số <b>{productTotal}</b> sản phẩm
                                     </span>
                                     <span>Tổng tiền:</span>
-                                    <span className={cx('total-money')}>321.800đ</span>
+                                    <span className={cx('total-money')}>{moneyTotal}</span>
                                 </div>
                                 <div className={cx('cart-footer')}>
-                                    <button className={cx('cart-btn')}>Xem chi tiết</button>
-                                    <button className={cx('cart-btn', 'active')}>Thanh toán ngay</button>
+                                    <Link to='/cart'>
+                                        <button className={cx('cart-btn')}>Xem chi tiết</button>
+                                    </Link>
+                                    <Link to='/checkout'>
+                                        <button className={cx('cart-btn', 'active')}>
+                                            <span>Thanh toán ngay</span>
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

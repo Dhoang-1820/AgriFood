@@ -1,12 +1,22 @@
 import Home from '~/pages/Home'
 import Login from '~/pages/Login'
 import ProductDetails from '~/pages/ProductDetails'
+import Cart from '~/pages/Cart/Cart'
+import ForgotPass from '~/pages/Login/ForgotPass'
+import SignUp from '~/pages/Login/SingUp'
+import Categories from '~/pages/Categories'
+import Payment from '~/pages/Payment'
 
 // PublicRoutes
 const publicRoutes = [
     { path: '/', component: Home },
-    { path: '/login', component: Login, layout: null },
+    { path: '/cart', component: Cart },
     { path: '/products/:name--:id', component: ProductDetails },
+    { path: '/categories', component: Categories },
+    { path: '/checkout', component: Payment },
+    { path: '/login', component: Login, layout: null },
+    { path: '/forgot-password', component: ForgotPass, layout: null },
+    { path: '/signup', component: SignUp, layout: null },
 ]
 
 const privateRoutes = []

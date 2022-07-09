@@ -1,24 +1,27 @@
-import classnames from 'classnames/bind';
-import styles from './CartItem.module.scss';
+import classnames from 'classnames/bind'
+import styles from './CartItem.module.scss'
+import FormatCurrency from '~/commonServices/FormatCurrency'
+import { Link } from 'react-router-dom'
 
-const cx = classnames.bind(styles);
+const cx = classnames.bind(styles)
 
-function CartItem() {
-    return ( 
-        <div className={cx('wrapper')}>
+function CartItem({ item, link }) {
+    console.log(link)
+    return (
+        <Link to={link} className={cx('wrapper')}>
             <div className={cx('product-img')}>
-                <img className={cx('img')} src='https://cdn-crownx.winmart.vn/images/prod/162427581122910622859-LOC-Mo-Jin-cay-Ottogi-gui-80g.jpg'></img>
+                <img className={cx('img')} src={item.image} alt={item.name}></img>
             </div>
             <div className={cx('description')}>
-                <p className={cx('title')}>Mì bò hầm Ottogi Lốc 8 gói x 120g </p>
-                <p className={cx('units')}>ĐVT: Lô, lốc</p>
+                <p className={cx('title')}>{item.name}</p>
+                <p className={cx('units')}>ĐVT: {item.unit}</p>
                 <div className={cx('details')}>
-                    <p className={cx('quantity')}>x1</p>
-                    <p className={cx('price')}>70.900đ</p>
+                    <p className={cx('quantity')}>x{item.quantity}</p>
+                    <p className={cx('price')}>{FormatCurrency(item.price)}</p>
                 </div>
             </div>
-        </div> 
-    );
+        </Link>
+    )
 }
 
-export default CartItem;
+export default CartItem

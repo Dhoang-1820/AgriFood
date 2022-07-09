@@ -1,0 +1,113 @@
+.wrapper {
+    padding: 15px 0;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: 500;
+    padding-left: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.infor-title {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    margin: 15px 0;
+    font-weight: 500;
+    color: var(--black-color);
+}
+
+.payment-options {
+    width: 100%;
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+
+    input[type='radio'] {
+        width: 1.8rem;
+        height: 1.8rem;
+        cursor: pointer;
+    }
+}
+
+.option-label {
+    padding-left: 5px;
+    font-size: 1.3rem;
+}
+
+.shipping-infor,
+.payment-options,
+.invoice {
+    background-color: var(--white);
+    border: 1px solid #999999;
+    width: 100%;
+    padding: 12px 10px;
+
+    // display: flex;
+    // flex-direction: column;
+}
+
+.infor-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.shipping-label {
+    font-size: 1.3rem;
+    width: 20%;
+    margin-left: 15px;
+}
+
+.invoice-title {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: #808080;
+    display: flex;
+    align-items: center;
+
+    input[type='checkbox'] {
+        height: 18px;
+        width: 18px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    label {
+        display: flex;
+        align-items: center;
+        padding: 15px 0;
+        cursor: pointer;
+    }
+}
+
+.invoice {
+    display: none;
+}
+
+.confirm {
+    background-color: rgb(255, 255, 255);
+    padding: 20px 40px 30px;
+    position: relative;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    border: 1px solid rgb(213, 213, 213);
+}
+
+.confirm-title {
+    margin-bottom: 20px;
+    width: 100%;
+    font-size: 14px;
+}
+.confirm-button {
+    display: flex;
+    justify-content: center;
+}
+
+.red-text {
+    color: var(--red-color);
+}

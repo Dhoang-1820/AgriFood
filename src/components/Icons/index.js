@@ -155,3 +155,47 @@ export const PlusIcon = ({ width = '2rem', height = '2rem ', className }) => (
         <path d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'></path>
     </svg>
 )
+
+export const IconRecycle = ({ width = '2rem', height = '2rem ', className }) => (
+    <svg
+        className={className}
+        focusable='false'
+        viewBox='0 0 24 24'
+        aria-hidden='true'
+        width={width}
+        height={height}
+        fill='currentColor'
+    >
+        <path d='M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z'></path>
+    </svg>
+)
+
+export const BackIcon = ({ width = '3rem', height = '3rem ', className }) => (
+    <svg
+        className={className}
+        width={width}
+        height={height}
+        xmlns='http://www.w3.org/2000/svg'
+        viewBox='0 0 16 16'
+        fill='currentColor'
+    >
+        <path
+            fillRule='evenodd'
+            d='M12 8a.5.5 0 0 1-.5.5H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5a.5.5 0 0 1 .5.5z'
+        ></path>
+    </svg>
+)
+
+export const WarningIcon = ({ width = '2rem', height = '2rem ', className }) => (
+    <svg
+        className={className}
+        width={width}
+        height={height}
+        focusable='false'
+        viewBox='0 0 24 24'
+        aria-hidden='true'
+        fill='currentColor'
+    >
+        <path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'></path>
+    </svg>
+)

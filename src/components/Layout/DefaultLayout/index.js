@@ -1,6 +1,5 @@
 import Footer from './Footer'
 import Header from './Header'
-import Navigation from './Header/Navigation'
 
 import classNames from 'classnames/bind'
 import styles from './DefaultLayout.module.scss'
