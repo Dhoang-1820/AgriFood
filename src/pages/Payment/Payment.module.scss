@@ -39,8 +39,7 @@
 }
 
 .shipping-infor,
-.payment-options,
-.invoice {
+.payment-options {
     background-color: var(--white);
     border: 1px solid #999999;
     width: 100%;
@@ -64,28 +63,38 @@
 }
 
 .invoice-title {
-    font-size: 1.6rem;
-    font-weight: 500;
-    color: #808080;
-    display: flex;
-    align-items: center;
+    display: inline-flex;
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+    cursor: pointer;
 
-    input[type='checkbox'] {
-        height: 18px;
-        width: 18px;
-        margin-right: 10px;
-        cursor: pointer;
+    &:checked ~ .invoice {
+        display: block;
     }
+}
 
-    label {
-        display: flex;
-        align-items: center;
-        padding: 15px 0;
-        cursor: pointer;
+.invoice-label {
+    font-weight: 500;
+    font-size: 1.6rem;
+    display: inline-flex;
+    align-items: center;
+    color: #808080;
+    padding: 15px 0;
+    cursor: pointer;
+
+    .invoice-icon {
+        margin-left: 3px;
+        width: 2.4rem;
+        height: 2.4rem;
     }
 }
 
 .invoice {
+    background-color: var(--white);
+    border: 1px solid #999999;
+    width: 100%;
+    padding: 12px 10px;
     display: none;
 }
 

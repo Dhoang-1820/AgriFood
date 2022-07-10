@@ -1,15 +1,17 @@
 .wrapper {
     width: 200px;
     font-size: 1.4rem;
+    padding: 9px 12px;
+    border-radius: 4px;
+    font-weight: 400;
     color: var(--red-color);
     border: 1px solid transparent;
-    border-radius: 4px;
     background-color: transparent;
-    font-weight: 500;
     cursor: pointer;
-    padding: 9px 12px;
+
     .title {
         line-height: 1;
+        text-align: center;
     }
 }
 

@@ -8,9 +8,6 @@ const cx = classNames.bind(styles)
 
 function User({ children }) {
     const type = window.location.pathname
-
-    console.log(typeof type)
-    console.log(typeof routes.profile)
     return (
         <div className={cx('wrapper')}>
             <div className={cx('sidebar')}>

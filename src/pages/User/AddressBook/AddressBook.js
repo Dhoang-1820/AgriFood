@@ -1,6 +1,8 @@
-import classNames from 'classnames/bind'
-import Button from '~/components/Button'
 import User from '../User'
+import Button from '~/components/Button'
+import routes from '~/config/routes'
+
+import classNames from 'classnames/bind'
 import styles from './AddressBook.module.scss'
 const cx = classNames.bind(styles)
 
@@ -10,7 +12,9 @@ function AddressBook() {
             <div className={cx('wrapper')}>
                 <div className={cx('header')}>
                     <span className={cx('title')}>Danh sách địa chỉ</span>
-                    <Button primary>Thêm địa chỉ mới</Button>
+                    <Button primary to={routes.createAddress}>
+                        Thêm địa chỉ mới
+                    </Button>
                 </div>
                 <div className={cx('content')}>
                     <div className={cx('body')}>

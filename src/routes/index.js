@@ -12,6 +12,7 @@ import Profile from '~/pages/User/Profile'
 import Oders from '~/pages/User/Oders/Oders'
 import AddressBook from '~/pages/User/AddressBook'
 import TransactionHistory from '~/pages/User/TransactionHistory'
+import NewAddress from '~/pages/User/NewAddress'
 
 // PublicRoutes
 const publicRoutes = [
@@ -23,6 +24,7 @@ const publicRoutes = [
     { path: routes.profile, component: Profile },
     { path: routes.orders, component: Oders },
     { path: routes.addressBook, component: AddressBook },
+    { path: routes.createAddress, component: NewAddress },
     { path: routes.transactionHistory, component: TransactionHistory },
     { path: routes.login, component: Login, layout: null },
     { path: routes.forgotPassword, component: ForgotPass, layout: null },

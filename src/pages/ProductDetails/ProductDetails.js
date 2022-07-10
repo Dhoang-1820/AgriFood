@@ -1,18 +1,19 @@
-import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { CartIcon, MinusIcon, PlusIcon } from '~/components/Icons'
+/* eslint-disable jsx-a11y/alt-text */
+import Box from '@mui/material/Box'
 import Rating from '@mui/material/Rating'
 import Stack from '@mui/material/Stack'
-import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import { Swiper, SwiperSlide } from 'swiper/react'
-import { Navigation, Thumbs } from 'swiper'
+import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { CartIcon, MinusIcon, PlusIcon } from '~/components/Icons'
+import Carousel from 'react-multi-carousel'
+import CustomDots from './CustomDots/CustomDots'
 
 import * as productServices from '~/apiServices/productServices'
 
 import classNames from 'classnames/bind'
-import styles from './ProductDetails.module.scss'
 import Button from '~/components/Button'
+import styles from './ProductDetails.module.scss'
 const cx = classNames.bind(styles)
 
 function ProductDetails() {
@@ -45,21 +46,53 @@ function ProductDetails() {
         <div className={cx('wrapper')}>
             <div className={cx('product')}>
                 <div className={cx('product-image')}>
-                    {/* <Swiper
-                        loop={false}
-                        spaceBetween={10}
-                        navigation={true}
-                        modules={[Navigation, Thumbs]}
-                        grabCursor={true}
-                        // thumbs={{ swiper: activeThumb }}
-                        className={cx('product-images-slider')}
+                    <Carousel
+                        className={cx('custom-dot')}
+                        customDot={<CustomDots />}
+                        // draggable
+                        // focusOnSelect={false}
+                        infinite
+                        responsive={{
+                            desktop: {
+                                breakpoint: {
+                                    max: 3000,
+                                    min: 1024,
+                                },
+                                items: 1,
+                            },
+                            mobile: {
+                                breakpoint: {
+                                    max: 464,
+                                    min: 0,
+                                },
+                                items: 1,
+                            },
+                            tablet: {
+                                breakpoint: {
+                                    max: 1024,
+                                    min: 464,
+                                },
+                                items: 1,
+                            },
+                        }}
+                        rewind={false}
+                        rewindWithAnimation={false}
+                        rtl={false}
+                        showDots
+                        slidesToSlide={1}
+                        swipeable
                     >
-                        <SwiperSlide>
-                            <img src={details.image} alt='product images' />
-                        </SwiperSlide>
-                    </Swiper> */}
-                    <img src={details.image} alt={details.name}></img>
-                    <div className={cx('list-image')}></div>
+                        <img
+                            src={details.image}
+                            alt={details.name}
+                            style={{
+                                display: 'block',
+                                height: '100%',
+                                margin: 'auto',
+                                width: '100%',
+                            }}
+                        />
+                    </Carousel>
                 </div>
 
                 <div className={cx('product-details')}>

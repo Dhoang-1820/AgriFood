@@ -1,20 +1,17 @@
+import { Autocomplete } from '@mui/material'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
+import Button from '~/components/Button'
 import FormControlLabel from '@mui/material/FormControlLabel'
-import { Autocomplete } from '@mui/material'
-import DatePicker from 'react-datepicker'
+import Switch from '@mui/material/Switch'
 import 'react-datepicker/dist/react-datepicker.css'
-import User from '../User'
-import { useState, React } from 'react'
 
 import classNames from 'classnames/bind'
-import styles from './Profile.module.scss'
-import Button from '~/components/Button'
+import User from '../User'
+import styles from './NewAddress.module.scss'
 const cx = classNames.bind(styles)
 
-function Profile() {
+function NewAddress() {
     const countries = [
         { code: 'AD', label: 'Andorra', phone: '376' },
         {
@@ -439,12 +436,11 @@ function Profile() {
         { code: 'ZM', label: 'Zambia', phone: '260' },
         { code: 'ZW', label: 'Zimbabwe', phone: '263' },
     ]
-    const [date, setDate] = useState(new Date())
 
     return (
         <User>
             <div className={cx('wrapper')}>
-                <div className={cx('title')}>Thông tin tài khoản</div>
+                <div className={cx('title')}>Tạo địa chỉ</div>
                 <Box
                     component='form'
                     sx={{
@@ -479,7 +475,7 @@ function Profile() {
                         </div>
                         <div className={cx('infor-item')}>
                             <label htmlFor='phone' className={cx('user-label')}>
-                                Số điện thoại
+                                Điện thoại di động
                                 <span className={cx('red-text')}>*</span>
                             </label>
                             <TextField
@@ -497,74 +493,7 @@ function Profile() {
                             </label>
                             <TextField size='small' fullWidth id='email' label='Nhập địa chỉ Email' />
                         </div>
-                        <div className={cx('infor-item')}>
-                            <label htmlFor='gender' className={cx('user-label', 'gender-label')}>
-                                Giới tính
-                            </label>
-                            <RadioGroup
-                                id='gender'
-                                size='large'
-                                row
-                                aria-labelledby='demo-row-radio-buttons-group-label'
-                            >
-                                <FormControlLabel
-                                    className={cx('gender-btn')}
-                                    value='male'
-                                    control={<Radio />}
-                                    label='Nam'
-                                />
-                                <FormControlLabel
-                                    className={cx('gender-btn')}
-                                    value='female'
-                                    control={<Radio />}
-                                    label='Nữ'
-                                />
-                            </RadioGroup>
-                        </div>
-                        <div className={cx('infor-item')}>
-                            <label htmlFor='birthday' className={cx('user-label')}>
-                                Ngày sinh
-                                <span className={cx('red-text')}>*</span>
-                            </label>
-                            <DatePicker
-                                closeOnScroll
-                                showMonthDropdown
-                                showYearDropdown
-                                dropdownMode='select'
-                                className={cx('birthday-input')}
-                                selected={date}
-                                onChange={(selected) => setDate(selected)}
-                            />
-                        </div>
-                        <div className={cx('infor-item')}>
-                            <label htmlFor='country' className={cx('user-label')}>
-                                Quốc gia
-                                <span className={cx('red-text')}>*</span>
-                            </label>
-                            <Autocomplete
-                                id='country'
-                                size='small'
-                                options={countries}
-                                disabled
-                                autoHighlight
-                                getOptionLabel={(option) => option.label}
-                                renderOption={(props, option) => (
-                                    <Box component='li' sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                        {option.label} ({option.code}) +{option.phone}
-                                    </Box>
-                                )}
-                                renderInput={(params) => (
-                                    <TextField
-                                        {...params}
-                                        label='Vietnam'
-                                        inputProps={{
-                                            ...params.inputProps,
-                                            autoComplete: 'new-password', // disable autocomplete and autofill
-                                        }}
-                                    />
-                                )}
-                            />
-                        </div>
+
                         <div className={cx('infor-item')}>
                             <label htmlFor='provinces' className={cx('user-label')}>
                                 Tỉnh/Thành phố
@@ -663,6 +592,10 @@ function Profile() {
                                 // helperText='Vui lòng điền đầy đủ thông tin'
                             />
                         </div>
+                        <div className={cx('infor-item')}>
+                            <label className={cx('switch-label')}></label>
+                            <FormControlLabel control={<Switch defaultChecked />} label='Đặt làm địa chỉ mặc định' />
+                        </div>
                     </div>
                     <Button primary onClick={(e) => e.preventDefault()}>
                         Cập nhật
@@ -673,4 +606,4 @@ function Profile() {
     )
 }
 
-export default Profile
+export default NewAddress

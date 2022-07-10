@@ -619,13 +619,10 @@ function Payment() {
                         </div>
                     </div>
                 </Box>
-                <div className={cx('invoice-title')}>
-                    <input type='checkbox' id='invoice' />
-                    <label htmlFor='invoice'>Yêu cầu xuất hóa đơn</label>
-                    <label htmlFor='invoice'>
-                        <WarningIcon className={cx('invoice-icon')} />
-                    </label>
-                </div>
+                <input className={cx('invoice-title')} type='checkbox' id='invoice' />
+                <label htmlFor='invoice' className={cx('invoice-label')}>
+                    Yêu cầu xuất hóa đơn <WarningIcon className={cx('invoice-icon')} />
+                </label>
                 <div className={cx('invoice')}>
                     <Box
                         component='form'

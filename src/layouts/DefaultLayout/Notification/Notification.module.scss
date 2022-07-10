@@ -1,0 +1,159 @@
+.wrapper {
+    z-index: 3;
+    padding: 10px;
+}
+
+.back-top-icon {
+    color: var(--white);
+}
+
+.notifi-btn,
+.back-top-btn {
+    background-color: var(--primary);
+    border-radius: 50%;
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    z-index: 3;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.back-top-btn {
+    left: 50px;
+    bottom: 85px;
+    display: none;
+}
+
+.back-top-btn.active {
+    display: flex;
+}
+
+.notifi-btn {
+    left: 50px;
+    bottom: 20px;
+    svg {
+        animation: ring 3s 0.5s ease-in-out infinite;
+        transform-origin: 50% 4px;
+    }
+}
+
+@keyframes ring {
+    0% {
+        transform: rotate(0);
+    }
+    1% {
+        transform: rotate(30deg);
+    }
+    3% {
+        transform: rotate(-28deg);
+    }
+    5% {
+        transform: rotate(34deg);
+    }
+    7% {
+        transform: rotate(-32deg);
+    }
+    9% {
+        transform: rotate(30deg);
+    }
+    11% {
+        transform: rotate(-28deg);
+    }
+    13% {
+        transform: rotate(26deg);
+    }
+    15% {
+        transform: rotate(-24deg);
+    }
+    17% {
+        transform: rotate(22deg);
+    }
+    19% {
+        transform: rotate(-20deg);
+    }
+    21% {
+        transform: rotate(18deg);
+    }
+    23% {
+        transform: rotate(-16deg);
+    }
+    25% {
+        transform: rotate(14deg);
+    }
+    27% {
+        transform: rotate(-12deg);
+    }
+    29% {
+        transform: rotate(10deg);
+    }
+    31% {
+        transform: rotate(-8deg);
+    }
+    33% {
+        transform: rotate(6deg);
+    }
+    35% {
+        transform: rotate(-4deg);
+    }
+    37% {
+        transform: rotate(2deg);
+    }
+    39% {
+        transform: rotate(-1deg);
+    }
+    41% {
+        transform: rotate(1deg);
+    }
+
+    43% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+.notifi-icon {
+    color: var(--white);
+}
+
+.popover-container {
+    background-color: var(--white);
+    width: 270px;
+}
+
+.popover-header {
+    background-color: var(--primary);
+    height: 44px;
+
+    .title {
+        color: var(--white);
+        text-align: center;
+        line-height: 44px;
+        font-size: 1.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+}
+
+.popover-content {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+
+    img {
+        width: 200px;
+        object-fit: contain;
+    }
+
+    .not-fount-text {
+        padding-top: 12px;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: var(--black-color);
+    }
+}

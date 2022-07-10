@@ -18,22 +18,10 @@ import FormatCurrency from '~/commonServices/FormatCurrency'
 const cx = classnames.bind(styles)
 
 function Header() {
+    const [carts, setCarts] = useState([])
     const headerRef = useRef()
     const isLogin = true
 
-    useEffect(() => {
-        document.onscroll = () => {
-            const scrollTop = document.documentElement.scrollTop || window.scrollY
-            headerRef.current.style.transition = 'all 1s'
-            if (scrollTop >= 600) {
-                headerRef.current.style.height = 50 + 'px'
-            } else {
-                headerRef.current.style.height = 80 + 'px'
-            }
-        }
-    }, [])
-
-    const [carts, setCarts] = useState([])
     useEffect(() => {
         const fechAPI = async () => {
             const result = await cartServices.getCarts()
@@ -42,8 +30,21 @@ function Header() {
         fechAPI()
     }, [])
 
+    const slideHeader = () => {
+        const scrolled = document.documentElement.scrollTop || window.scrollY
+        headerRef.current.style.transition = 'all 1s'
+        if (scrolled >= 600) {
+            headerRef.current.style.height = 50 + 'px'
+        } else {
+            headerRef.current.style.height = 80 + 'px'
+        }
+    }
+
+    window.addEventListener('scroll', slideHeader)
+
     const productTotal = carts.reduce((total, current) => total + current.quantity, 0)
     const moneyTotal = FormatCurrency(carts.reduce((total, current) => total + current.quantity * current.price, 0))
+
     return (
         <header className={cx('header')}>
             <div className={cx('wrapper')} ref={headerRef}>

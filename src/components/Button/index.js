@@ -41,7 +41,7 @@ function Button({
 
     return (
         <Comp className={classes} {...props}>
-            <span className={cx('title')}>{children}</span>
+            <div className={cx('title')}>{children}</div>
         </Comp>
     )
 }

@@ -11,6 +11,7 @@ const routes = {
     login: '/login',
     forgotPassword: '/forgot-password',
     signup: '/signup',
+    createAddress: '/create-address',
 }
 
 export default routes

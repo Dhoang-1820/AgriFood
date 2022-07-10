@@ -44,46 +44,6 @@ ul {
 }
 
 body {
-    .react-multi-carousel-dot button {
-        width: 8px;
-        height: 8px;
-        background: rgba(8, 8, 8, 0.2);
-        border-width: 4px;
-        border-color: rgba(8, 8, 8, 0.2);
-    }
-
-    .react-multi-carousel-dot--active button {
-        background: #fff;
-        border-color: hsla(0, 0%, 100%, 0.2);
-    }
-
-    .react-multiple-carousel__arrow {
-        height: 40px;
-        width: 24px;
-        display: flex;
-        -webkit-box-align: center;
-        align-items: center;
-        -webkit-box-pack: center;
-        justify-content: center;
-        background-color: rgba(0, 0, 0, 0.2);
-        color: rgba(255, 255, 255, 0.4);
-        padding: 0px;
-        border-radius: 0px;
-        box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px;
-        border: 0px;
-        outline: 0px;
-        cursor: pointer;
-        position: absolute;
-        top: 46%;
-        right: 0px;
-        margin-top: -20px;
-        z-index: 1;
-    }
-
-    .react-multiple-carousel__arrow--left {
-        left: 1px;
-    }
-
     //Custom datepicker
     .react-datepicker {
         font-size: 1.2rem;
@@ -113,11 +73,15 @@ body {
         }
     }
 
+    .react-datepicker-popper {
+        z-index: 10;
+    }
+
     .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before,
     .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::after,
     .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle::before,
     .react-datepicker-popper[data-placement^='top'] .react-datepicker__triangle::after {
-        left: -110px;
+        left: -175px;
     }
 }
 

@@ -7,7 +7,7 @@
 
 .container {
     width: var(--default-layout-width);
-    margin-top: 120px;
+    margin-top: 100px; // minus bell btn and back to top btn (20px)
 }
 
 .content {

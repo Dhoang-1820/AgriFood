@@ -1,15 +1,22 @@
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import { useEffect, useState } from 'react'
+import Button from '~/components/Button'
+
+import * as cartServices from '~/apiServices/cartServices'
 import styles from './Cart.module.scss'
 import classNames from 'classnames/bind'
-import { IconRecycle, MinusIcon, PlusIcon } from '~/components/Icons'
-import Button from '~/components/Button'
-import { useEffect, useState } from 'react'
-import * as cartServices from '~/apiServices/cartServices'
 import CartItem from '../components/CartItem'
+import { WarningIconOuLine } from '~/components/Icons'
+import routes from '~/config/routes'
 
 const cx = classNames.bind(styles)
 
 function Cart() {
     const [carts, setCarts] = useState([])
+    const [open, setOpen] = useState(false)
 
     useEffect(() => {
         const fechAPI = async () => {
@@ -19,18 +26,59 @@ function Cart() {
         fechAPI()
     }, [])
 
+    const handleClickOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
+    }
+
     return (
         <div className={cx('wrapper')}>
             <div className={cx('cart-infor')}>
                 <div className={cx('cart-btn')}>
-                    <Button primary>Tiếp tục mua hàng</Button>
-                    <Button disable>Xoá giỏ hàng?</Button>
+                    <Button primary to='/'>
+                        Tiếp tục mua hàng
+                    </Button>
+                    <Button disable onClick={handleClickOpen}>
+                        Xoá giỏ hàng?
+                    </Button>
                 </div>
                 <div className={cx('cart-list')}>
                     {carts.map((product) => (
                         <CartItem key={product.code} item={product} />
                     ))}
                 </div>
+            </div>
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby='alert-dialog-title'
+                    aria-describedby='alert-dialog-description'
+                >
+                    <DialogTitle id='alert-dialog-title'></DialogTitle>
+                    <DialogContent>
+                        <div>
+                            <div className={cx('dialog-icon')}>
+                                <WarningIconOuLine />
+                            </div>
+                            <div className={cx('dialog-title')}>Xoá giỏ hàng</div>
+                            <div className={cx('dialog-content')}>
+                                Cảnh báo: Toàn bộ sản phẩm trong giỏ hàng hiện tại sẽ bị xoá đi
+                            </div>
+                            <div className={cx('dialog-btn-group')}>
+                                <Button disable onClick={handleClose}>
+                                    Huỷ
+                                </Button>
+                                <Button primary onClick={handleClose} autoFocus>
+                                    Xác nhận
+                                </Button>
+                            </div>
+                        </div>
+                    </DialogContent>
+                </Dialog>
             </div>
             <div className={cx('payment-infor')}>
                 <div className={cx('payment-row')}>
@@ -48,8 +96,8 @@ function Cart() {
                     <span>Thành tiền</span>
                     <span className={cx('total-cash')}>30.000đ</span>
                 </div>
-                <span className={cx('payment-vat')}>(Giá đã bao gồm VAT)</span>
-                <Button primary className={cx('payment-btn')}>
+                <div className={cx('payment-vat')}>(Giá đã bao gồm VAT)</div>
+                <Button primary to={routes.checkout} className={cx('payment-btn')}>
                     Thanh toán
                 </Button>
             </div>

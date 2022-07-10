@@ -147,7 +147,7 @@
         padding-top: 10px;
         font-size: 1.3rem;
         font-style: italic;
-        float: right;
+        text-align: right;
     }
 }
 
@@ -175,6 +175,35 @@
 }
 
 .payment-btn {
-    margin-top: 10px;
+    display: flex;
+    justify-content: center;
     width: 100%;
+    margin-top: 8px;
+}
+
+.dialog-icon {
+    font-size: 9rem;
+    color: #f8bb86;
+    text-align: center;
+}
+
+.dialog-title {
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+    padding: 12px 0;
+}
+
+.dialog-content {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--black-color);
+    padding: 15px 0;
+}
+
+.dialog-btn-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
