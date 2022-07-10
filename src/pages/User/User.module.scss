@@ -21,14 +21,22 @@
 }
 
 .menu-item {
-    display: flex;
-    align-items: center;
-    padding: 10px 12px;
     cursor: pointer;
     color: var(--text-sibar-color);
+    a {
+        display: flex;
+        align-items: center;
+        padding: 10px 12px;
+    }
 
-    &:hover {
+    &:hover a {
         background-color: var(--hover-color);
+        color: var(--red-color);
+    }
+}
+
+.menu-item.active {
+    a {
         color: var(--red-color);
     }
 }
@@ -41,6 +49,6 @@
 
 .content {
     padding: 15px;
-    width: 70%;
+    width: 75%;
     height: 800px;
 }

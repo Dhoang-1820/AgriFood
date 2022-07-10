@@ -7,6 +7,7 @@ import CartItem from './CartItem'
 import Navigation from './Navigation'
 import Search from './Search/Search'
 
+import routes from '~/config/routes'
 import classnames from 'classnames/bind'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
@@ -48,7 +49,7 @@ function Header() {
             <div className={cx('wrapper')} ref={headerRef}>
                 <div className={cx('content')}>
                     <div className={cx('logo')}>
-                        <Link to={'/'}>
+                        <Link to={routes.home}>
                             <img src={images.logo} alt='logo' className={cx('logo-img')} />
                         </Link>
                     </div>
@@ -57,7 +58,7 @@ function Header() {
                         {!isLogin ? <AccountLogin /> : <Account />}
 
                         <div className={cx('cart')}>
-                            <Link to='/cart' className={cx('btn-cart')}>
+                            <Link to={routes.cart} className={cx('btn-cart')}>
                                 <CartIcon className={cx('actions-icon')} />
                                 <span className={cx('actions-text')}>Giỏ hàng ({carts.length})</span>
                             </Link>
@@ -76,10 +77,10 @@ function Header() {
                                     <span className={cx('total-money')}>{moneyTotal}</span>
                                 </div>
                                 <div className={cx('cart-footer')}>
-                                    <Link to='/cart'>
+                                    <Link to={routes.cart}>
                                         <button className={cx('cart-btn')}>Xem chi tiết</button>
                                     </Link>
-                                    <Link to='/checkout'>
+                                    <Link to={routes.checkout}>
                                         <button className={cx('cart-btn', 'active')}>
                                             <span>Thanh toán ngay</span>
                                         </button>

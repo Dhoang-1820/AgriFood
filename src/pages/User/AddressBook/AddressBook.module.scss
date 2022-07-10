@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.content {
+    .body {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        padding: 50px;
+    }
+
+    .not-fount-text {
+        font-weight: 500;
+        color: var(--black-color);
+    }
+}

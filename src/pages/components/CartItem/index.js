@@ -1,8 +1,9 @@
-import styles from '../../Cart/Cart.module.scss'
-import classNames from 'classnames/bind'
+import FormatCurrency from '~/commonServices/FormatCurrency'
 import { IconRecycle, MinusIcon, PlusIcon } from '~/components/Icons'
 import { useState } from 'react'
 
+import styles from '../../Cart/Cart.module.scss'
+import classNames from 'classnames/bind'
 const cx = classNames.bind(styles)
 
 function CartItem({ item }) {
@@ -31,7 +32,7 @@ function CartItem({ item }) {
             </div>
             <div className={cx('product-price')}>
                 <div className={cx('price')}>
-                    <span className={cx('price-sale')}>{item.price}đ</span>
+                    <span className={cx('price-sale')}>{FormatCurrency(item.price)}</span>
                     <span className={cx('price-original')}>16.700</span>
                     <span className={cx('sale-percents')}>(-25%)</span>
                 </div>

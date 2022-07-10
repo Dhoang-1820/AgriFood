@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Button from '~/components/Button'
 import Header from './Header'
 import styles from './Login.module.scss'
+import routes from '~/config/routes'
 
 const cx = classNames.bind(styles)
 
@@ -14,7 +15,7 @@ function Login() {
                 <div className={cx('content')}>
                     <input className={cx('email')} placeholder='Email hoặc số điện thoại' />
                     <input className={cx('password')} placeholder='Mật khẩu' />
-                    <Link to='/forgot-password' className={cx('forgot-password')}>
+                    <Link to={routes.forgotPassword} className={cx('forgot-password')}>
                         Quên mật khẩu?
                     </Link>
                 </div>
@@ -25,7 +26,7 @@ function Login() {
                     <Button to='/' primary className={cx('btn')}>
                         Trang chủ
                     </Button>
-                    <Link to='/signup' className={cx('signup')}>
+                    <Link to={routes.signup} className={cx('signup')}>
                         Tạo tài khoản
                     </Link>
                 </div>

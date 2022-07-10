@@ -5,6 +5,7 @@ import { useState } from 'react'
 import Tippy from '@tippyjs/react/headless'
 import 'tippy.js/animations/scale.css'
 
+import routes from '~/config/routes'
 import Modal from '~/commonServices/Modal'
 import classnames from 'classnames/bind'
 import styles from './Navigation.module.scss'
@@ -36,7 +37,7 @@ function Navigation() {
                             <span>Danh mục sản phẩm</span>
                         </div>
                         <ul className={cx('menu-list', 'scrollbar-custom')}>
-                            <Link to='/categories' className={cx('menu-item')} onClick={handleMouseOut}>
+                            <Link to={routes.categories} className={cx('menu-item')} onClick={handleMouseOut}>
                                 <div className={cx('menu-name')}>Sản phẩm khuyến mãi</div>
                             </Link>
                             <li>
@@ -60,7 +61,7 @@ function Navigation() {
                                         </div>
                                     )}
                                 >
-                                    <Link to='/categories' className={cx('menu-item')} onClick={handleMouseOut}>
+                                    <Link to={routes.categories} className={cx('menu-item')} onClick={handleMouseOut}>
                                         <div className={cx('menu-name')}>Rau - Củ - Trái cây</div>
                                         <FontAwesomeIcon className={cx('dropdown-icon')} icon={faAngleRight} />
                                     </Link>
@@ -87,7 +88,7 @@ function Navigation() {
                                         </div>
                                     )}
                                 >
-                                    <Link to='/categories' className={cx('menu-item')} onClick={handleMouseOut}>
+                                    <Link to={routes.categories} className={cx('menu-item')} onClick={handleMouseOut}>
                                         <div className={cx('menu-name')}>Thịt - Trứng - Hải sản</div>
                                         <FontAwesomeIcon className={cx('dropdown-icon')} icon={faAngleRight} />
                                     </Link>

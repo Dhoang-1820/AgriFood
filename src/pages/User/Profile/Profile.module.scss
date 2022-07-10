@@ -21,6 +21,10 @@
         margin-left: 15px;
     }
 
+    .user-label.gender-label {
+        width: 23%;
+    }
+
     .red-text {
         color: var(--red-color);
     }
@@ -46,4 +50,10 @@
 .react-datepicker {
     position: relative;
     color: red;
+}
+
+body {
+    .gender-btn {
+        margin-right: 75px;
+    }
 }

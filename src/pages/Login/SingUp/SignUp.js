@@ -3,6 +3,7 @@ import classNames from 'classnames/bind'
 import Button from '~/components/Button'
 import { Link } from 'react-router-dom'
 import Header from '../Header'
+import routes from '~/config/routes'
 
 const cx = classNames.bind(styles)
 
@@ -10,7 +11,7 @@ function SignUp() {
     return (
         <div className={cx('wrapper')}>
             <div className={cx('form-container')}>
-                <Header to='/login'>Đăng ký</Header>
+                <Header to={routes.login}>Đăng ký</Header>
                 <div className={cx('title')}>Nhập thông tin tài khoản</div>
                 <input placeholder='Email hoặc số điện thoại' />
                 <input placeholder='Mật khẩu' />
@@ -20,7 +21,7 @@ function SignUp() {
                 <Button primary className={cx('btn')}>
                     Tiếp tục
                 </Button>
-                <Link to='/login'>Đăng nhập</Link>
+                <Link to={routes.login}>Đăng nhập</Link>
             </div>
         </div>
     )

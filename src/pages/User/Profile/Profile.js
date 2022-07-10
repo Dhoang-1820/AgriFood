@@ -498,7 +498,7 @@ function Profile() {
                             <TextField size='small' fullWidth id='email' label='Nhập địa chỉ Email' />
                         </div>
                         <div className={cx('infor-item')}>
-                            <label htmlFor='gender' className={cx('user-label')}>
+                            <label htmlFor='gender' className={cx('user-label', 'gender-label')}>
                                 Giới tính
                             </label>
                             <RadioGroup
@@ -507,8 +507,18 @@ function Profile() {
                                 row
                                 aria-labelledby='demo-row-radio-buttons-group-label'
                             >
-                                <FormControlLabel value='male' control={<Radio />} label='Nam' />
-                                <FormControlLabel value='female' control={<Radio />} label='Nữ' />
+                                <FormControlLabel
+                                    className={cx('gender-btn')}
+                                    value='male'
+                                    control={<Radio />}
+                                    label='Nam'
+                                />
+                                <FormControlLabel
+                                    className={cx('gender-btn')}
+                                    value='female'
+                                    control={<Radio />}
+                                    label='Nữ'
+                                />
                             </RadioGroup>
                         </div>
                         <div className={cx('infor-item')}>

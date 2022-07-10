@@ -103,6 +103,14 @@ body {
             padding-bottom: 3px;
             font-size: 1.4rem;
         }
+
+        .react-datepicker__header {
+            font-size: 1.2rem;
+        }
+
+        .react-datepicker__month-text {
+            width: 6rem;
+        }
     }
 
     .react-datepicker-popper[data-placement^='bottom'] .react-datepicker__triangle::before,

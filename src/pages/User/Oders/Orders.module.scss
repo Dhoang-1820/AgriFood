@@ -1,0 +1,40 @@
+.wrapper {
+}
+
+.title {
+    font-size: 1.8rem;
+    font-weight: 500;
+}
+
+.content {
+    margin-top: 20px;
+
+    .header {
+        display: flex;
+        height: 40px;
+        align-items: center;
+        justify-content: space-between;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        font-weight: bold;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .header-collumn {
+        width: 20%;
+        font-size: 1.3rem;
+        color: var(--black-color);
+    }
+
+    .body {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        padding: 50px;
+    }
+
+    .not-fount-text {
+        font-weight: 500;
+        color: var(--black-color);
+    }
+}
