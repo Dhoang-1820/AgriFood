@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react'
 import { deleteProductCategory, getProductCategories } from '~/api_services/productCategoryServices'
-import { getCategoryById } from '~/api_services/categoryServices'
 import Button from '~/components/Button'
 import Dialog from '@mui/material/Dialog'
 import DialogContent from '@mui/material/DialogContent'

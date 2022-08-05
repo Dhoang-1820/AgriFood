@@ -11,7 +11,7 @@ import Select from '@mui/material/Select'
 import InputLabel from '@mui/material/InputLabel'
 import FormControl from '@mui/material/FormControl'
 
-import { useEffect, useLayoutEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { getCategories, getCategoryById } from '~/api_services/categoryServices'
 import { putProductCCategory, deleteProductCategory } from '~/api_services/productCategoryServices'
 import Validator from '~/common_services/Validator'
