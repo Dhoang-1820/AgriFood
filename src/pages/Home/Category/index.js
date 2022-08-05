@@ -11,16 +11,14 @@ function Category({ category }) {
     return (
         <div className={cx('product-container')}>
             <div className={cx('product-header')}>
-                <h3 className={cx('product-title')}>{category.title}</h3>
+                {/* <h3 className={cx('product-title')}>{category.title}</h3> */}
             </div>
             <div className={cx('product-list')}>
-                {category.products && category.products.map((item, index) => <Product key={index} product={item} />)}
+                {/* {category.products && category.products.map((item, index) => <Product key={index} product={item} />)} */}
             </div>
             <div className={cx('product-footer')}>
                 <div className={cx('product-show-more')}>
-                    <div>
-                        Xem thêm 33 sản phẩm <strong>{category.title}</strong>
-                    </div>
+                    <div>{/* Xem thêm 33 sản phẩm <strong>{category.title}</strong> */}</div>
                     <FontAwesomeIcon icon={faAngleDown} className={cx('product-show-more__icon')} />
                 </div>
             </div>

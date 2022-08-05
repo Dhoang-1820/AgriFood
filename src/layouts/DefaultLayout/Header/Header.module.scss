@@ -12,10 +12,6 @@
 }
 
 .wrapper {
-    --search-button-width: 50px;
-    --search-input-width: 491px;
-    --boder-line: 1px solid rgba(0, 0, 0, 0.05);
-
     height: var(--default-header-height);
     display: flex;
     justify-content: center;
@@ -30,7 +26,9 @@
 }
 
 .logo-img {
+    max-width: 100%;
     max-height: 100%;
+    margin-right: 8px;
     cursor: pointer;
 }
 

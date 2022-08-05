@@ -12,8 +12,8 @@ import classnames from 'classnames/bind'
 import images from '~/assets/images'
 import styles from './Header.module.scss'
 import AccountLogin from './AccountLogin/AccountLogin'
-import * as cartServices from '~/apiServices/cartServices'
-import FormatCurrency from '~/commonServices/FormatCurrency'
+import * as cartServices from '~/api_services/cartServices'
+import FormatCurrency from '~/common_services/FormatCurrency'
 
 const cx = classnames.bind(styles)
 
@@ -27,7 +27,7 @@ function Header() {
             const result = await cartServices.getCarts()
             setCarts(result)
         }
-        fechAPI()
+        // fechAPI()
     }, [])
 
     const slideHeader = () => {

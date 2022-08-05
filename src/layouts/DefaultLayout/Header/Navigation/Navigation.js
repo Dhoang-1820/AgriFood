@@ -6,7 +6,7 @@ import Tippy from '@tippyjs/react/headless'
 import 'tippy.js/animations/scale.css'
 
 import routes from '~/config/routes'
-import Modal from '~/commonServices/Modal'
+import Modal from '~/common_services/Modal'
 import classnames from 'classnames/bind'
 import styles from './Navigation.module.scss'
 import { Link } from 'react-router-dom'

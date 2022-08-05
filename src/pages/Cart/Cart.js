@@ -5,7 +5,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import { useEffect, useState } from 'react'
 import Button from '~/components/Button'
 
-import * as cartServices from '~/apiServices/cartServices'
+import * as cartServices from '~/api_services/cartServices'
 import styles from './Cart.module.scss'
 import classNames from 'classnames/bind'
 import CartItem from '../components/CartItem'
@@ -23,7 +23,7 @@ function Cart() {
             const result = await cartServices.getCarts()
             setCarts(result)
         }
-        fechAPI()
+        // fechAPI()
     }, [])
 
     const handleClickOpen = () => {

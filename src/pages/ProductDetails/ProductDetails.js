@@ -9,7 +9,7 @@ import { CartIcon, MinusIcon, PlusIcon } from '~/components/Icons'
 import Carousel from 'react-multi-carousel'
 import CustomDots from './CustomDots/CustomDots'
 
-import * as productServices from '~/apiServices/productServices'
+import * as productServices from '~/api_services/productServices'
 
 import classNames from 'classnames/bind'
 import Button from '~/components/Button'
@@ -84,7 +84,7 @@ function ProductDetails() {
                     >
                         <img
                             src={details.image}
-                            alt={details.name}
+                            alt={details.title}
                             style={{
                                 display: 'block',
                                 height: '100%',
@@ -96,7 +96,7 @@ function ProductDetails() {
                 </div>
 
                 <div className={cx('product-details')}>
-                    <h3 className={cx('product-name')}>{details.name}</h3>
+                    <h3 className={cx('product-name')}>{details.title}</h3>
                     <p>Hãy là người đầu tiên đánh giá sản phẩm này!</p>
                     <div className={cx('product-code')}>SKU: 1054870</div>
                     <div className={cx('product-price-wrapper')}>

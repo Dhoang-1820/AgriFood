@@ -9,79 +9,6 @@ import styles from './Categories.module.scss'
 const cx = classNames.bind(styles)
 
 function Categories() {
-    const products = [
-        {
-            name: 'Bưởi hồng da xanh túi lưới',
-            code: '10054870',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428535691210054870-KG-Choo-sua-Burine-Grie%CE%B2brei-Vanille-d%C3%A0nh-cho-tre-tu-6-thong-tuoi-(Vi-6-hu-x-50g).jpg',
-            unit: '1.2Kg',
-            price: 69480,
-        },
-        {
-            name: 'Dưa lưới sạch Đế Vương King size ruột xanh',
-            code: '10054871',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428467254410242405-QUA-Dua-xiom-got.jpg',
-            unit: 'Quả',
-            price: 89000,
-        },
-        {
-            name: 'Bắp cải trắng',
-            code: '10054872',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428572368810054020-KG-Bap-non-200g.jpg',
-            unit: '0.6Kg',
-            price: 14340,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-        {
-            name: 'Mướp hương',
-            code: '10054873',
-            image: 'https://cdn-crownx.winmart.vn/images/prod/162428172466110053905-KG-Bu-Beef-steak-MVP-500gr.jpg',
-            unit: '0.5Kg',
-            price: 18500,
-        },
-    ]
-
     const btnRef = useRef()
     const contentRef = useRef()
 
@@ -145,9 +72,9 @@ function Categories() {
                     </button>
                 </header>
                 <div className={cx('products-list')}>
-                    {products.map((product, index) => (
+                    {/* {products.map((product, index) => (
                         <Product product={product} key={index} FourCol />
-                    ))}
+                    ))} */}
                 </div>
             </div>
         </div>

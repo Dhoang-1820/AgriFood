@@ -1,0 +1,33 @@
+.wrapper {
+    position: fixed;
+    background-color: #111827;
+    height: 64px;
+    top: 0;
+    right: 0;
+    width: calc(100% - 280px);
+    border-bottom: 1px solid #2d3748;
+    z-index: 1;
+}
+
+.header {
+    width: 100%;
+}
+
+.menu-img {
+    height: 62px;
+    width: 63px;
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    margin-right: 8px;
+    border-radius: 50%;
+    border: 1px solid #2d3748;
+
+    overflow: hidden;
+
+    img {
+        max-height: 53%;
+
+        object-fit: contain;
+    }
+}

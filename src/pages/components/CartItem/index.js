@@ -1,4 +1,4 @@
-import FormatCurrency from '~/commonServices/FormatCurrency'
+import FormatCurrency from '~/common_services/FormatCurrency'
 import { IconRecycle, MinusIcon, PlusIcon } from '~/components/Icons'
 import { useState } from 'react'
 
@@ -22,7 +22,7 @@ function CartItem({ item }) {
             <div className={cx('product-infor')}>
                 <img className={cx('product-image')} src={item.image} alt='product img'></img>
                 <div className={cx('product-description')}>
-                    <div className={cx('title')}>{item.name}</div>
+                    <div className={cx('title')}>{item.title}</div>
                     <div className={cx('units')}>ĐVT: {item.unit}</div>
                     <div className={cx('remove-item')}>
                         <IconRecycle />

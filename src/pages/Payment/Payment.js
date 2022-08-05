@@ -456,18 +456,7 @@ function Payment() {
                     </div>
                 </div>
                 <div className={cx('infor-title')}>Địa chỉ nhận hàng</div>
-                <Box
-                    component='form'
-                    sx={{
-                        '& .MuiInputLabel-root': { fontSize: '1.4rem' },
-                        '& .MuiOutlinedInput-root': { fontSize: '1.4rem' },
-                        '& .MuiAutocomplete-root': { width: '100%' },
-                        '& .MuiAutocomplete-option': { fontSize: '1.4rem' },
-                        '& .MuiFormHelperText-root': { fontSize: '1.2rem' },
-                    }}
-                    noValidate
-                    autoComplete='on'
-                >
+                <Box component='form' noValidate autoComplete='on'>
                     <div className={cx('shipping-infor')}>
                         <div className={cx('infor-item')}>
                             <label htmlFor='fullName' className={cx('shipping-label')}>

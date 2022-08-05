@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import * as categoryServices from '~/apiServices/categoryServices'
+import * as categoryServices from '~/api_services/categoryServices'
 
 import Category from './Category'
 import Slider from '~/layouts/DefaultLayout/Slider'
@@ -13,17 +13,18 @@ function Home() {
 
     useEffect(() => {
         const fechAPI = async () => {
-            const result = await categoryServices.getCategory()
+            const result = await categoryServices.getCategories()
             setCategories(result)
         }
-        fechAPI()
+        // fechAPI()
     }, [])
     return (
         <>
             <Slider />
-            {categories?.map((category, index) => (
+            {/* {categories.map((category, index) => (
                 <Category key={index} category={category} />
-            ))}
+            ))} */}
+            <Category />
         </>
     )
 }

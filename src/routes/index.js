@@ -1,5 +1,5 @@
-import routes from '~/config/routes'
-
+// Home pages
+import config from '~/config'
 import Home from '~/pages/Home'
 import Login from '~/pages/Login'
 import ProductDetails from '~/pages/ProductDetails'
@@ -14,23 +14,37 @@ import AddressBook from '~/pages/User/AddressBook'
 import TransactionHistory from '~/pages/User/TransactionHistory'
 import NewAddress from '~/pages/User/NewAddress'
 
+// Admin pages
+import Products from '~/admin_pages/Products'
+import NewProduct from '~/admin_pages/Products/NewProduct'
+import NewCategory from '~/admin_pages/Category/NewCategory'
+import ListCategories from '~/admin_pages/Category/ListCategories'
+import NewProductCategory from '~/admin_pages/ProductCategory/NewProductCategory'
+import ListProductCategory from '~/admin_pages/ProductCategory/ListProductCategory'
+
 // PublicRoutes
 const publicRoutes = [
-    { path: routes.home, component: Home },
-    { path: routes.cart, component: Cart },
-    { path: routes.productDetails, component: ProductDetails },
-    { path: routes.categories, component: Categories },
-    { path: routes.checkout, component: Payment },
-    { path: routes.profile, component: Profile },
-    { path: routes.orders, component: Oders },
-    { path: routes.addressBook, component: AddressBook },
-    { path: routes.createAddress, component: NewAddress },
-    { path: routes.transactionHistory, component: TransactionHistory },
-    { path: routes.login, component: Login, layout: null },
-    { path: routes.forgotPassword, component: ForgotPass, layout: null },
-    { path: routes.signup, component: SignUp, layout: null },
+    { path: config.routes.home, component: Home },
+    { path: config.routes.cart, component: Cart },
+    { path: config.routes.productDetails, component: ProductDetails },
+    { path: config.routes.categories, component: Categories },
+    { path: config.routes.checkout, component: Payment },
+    { path: config.routes.profile, component: Profile },
+    { path: config.routes.orders, component: Oders },
+    { path: config.routes.addressBook, component: AddressBook },
+    { path: config.routes.createAddress, component: NewAddress },
+    { path: config.routes.transactionHistory, component: TransactionHistory },
+    { path: config.routes.login, component: Login, layout: null },
+    { path: config.routes.forgotPassword, component: ForgotPass, layout: null },
+    { path: config.routes.signup, component: SignUp, layout: null },
 ]
 
-const privateRoutes = []
+const privateRoutes = [
+    { path: config.admin.newProduct, component: NewProduct },
+    { path: config.admin.newCategory, component: NewCategory },
+    { path: config.admin.listCategories, component: ListCategories },
+    { path: config.admin.newProductCategory, component: NewProductCategory },
+    { path: config.admin.listProductCategory, component: ListProductCategory },
+]
 
 export { publicRoutes, privateRoutes }

@@ -1,0 +1,29 @@
+.wrapper {
+    position: fixed;
+    overflow: hidden;
+    width: 280px;
+    height: 100vh;
+    background-color: #111827;
+    border-right: 1px solid #2d3748;
+    padding: 5px 8px;
+}
+
+.header {
+    margin-bottom: 22px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #2d3748;
+
+    .header-logo {
+        max-width: 100%;
+        object-fit: contain;
+    }
+
+    .header-title {
+        text-align: center;
+        color: white;
+    }
+}
+
+.content {
+    width: 100%;
+}
