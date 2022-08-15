@@ -9,6 +9,8 @@ function Validator(rules, fields) {
         const validationMethod = validator[rule.method]
         if (validationMethod(fieldValue, ...args) !== rule.validWhen) {
             errors[rule.field] = rule.message
+        } else {
+            errors[rule.field] = ''
         }
     })
 

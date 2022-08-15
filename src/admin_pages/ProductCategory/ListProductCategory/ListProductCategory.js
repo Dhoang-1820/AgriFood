@@ -12,7 +12,7 @@ import Popup from '~/components/Popup/Popup'
 import admin from '~/config/admin'
 
 import classNames from 'classnames/bind'
-import styles from './ListProductCategory.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/ListItem.module.scss'
 const cx = classNames.bind(styles)
 
 function ListProductCategory() {
@@ -149,7 +149,7 @@ function ListProductCategory() {
                     />
                     <div className={cx('collumn-item', 'id')}>ID</div>
                     <div className={cx('collumn-item')}>Danh mục</div>
-                    <div className={cx('collumn-item', 'image-item')}>Tên danh mục sản phẩm</div>
+                    <div className={cx('collumn-item')}>Tên danh mục sản phẩm</div>
                     <div className={cx('collumn-item', 'actions')}>Hành động</div>
                 </div>
                 <div className={cx('body', 'scrollbar-custom')}>

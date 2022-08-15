@@ -15,7 +15,7 @@ import Validator from '~/common_services/Validator'
 import Toast from '~/components/Toast'
 
 import classNames from 'classnames/bind'
-import styles from './NewProductCategory.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/NewItem.module.scss'
 const cx = classNames.bind(styles)
 
 function NewProductCategory() {
@@ -76,7 +76,10 @@ function NewProductCategory() {
     const handleValidate = (options = rules, content = fields) => {
         const result = Validator(options, content)
         setErrorMessage({ ...result })
-        return Boolean(Object.keys(result).length)
+        for (const key in result) {
+            if (!result[key]) return false
+        }
+        return true
     }
 
     const handleSubmit = (e) => {
@@ -84,6 +87,7 @@ function NewProductCategory() {
         const isError = handleValidate()
         const fechAPI = async () => {
             const result = await postProductCCategory({ categoryid: categoryId, title })
+            console.log(result)
             result ? handleSuccess() : handleFailure()
         }
         if (!isError) {
@@ -127,9 +131,9 @@ function NewProductCategory() {
         <div className={cx('wrapper')}>
             <div className={cx('title')}>Thêm mới danh mục sản phẩm</div>
             <Box className={cx('form')} component='form' noValidate autoComplete='on'>
-                <div className={cx('new-product-product')}>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='categoryId' className={cx('new-product-label')}>
+                <div className={cx('input-list')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='categoryId' className={cx('item-label')}>
                             Danh mục
                             <span className={cx('red-text')}>*</span>
                         </label>
@@ -153,8 +157,8 @@ function NewProductCategory() {
                             )}
                         </FormControl>
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='title' className={cx('new-product-label')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='title' className={cx('item-label')}>
                             Tên danh mục sản phẩm
                             <span className={cx('red-text')}>*</span>
                         </label>
@@ -170,9 +174,9 @@ function NewProductCategory() {
                             onBlur={handleBlurTitle}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label className={cx('new-product-label')}></label>
-                        <div className={cx('btn-new-product')}>
+                    <div className={cx('input-item')}>
+                        <label className={cx('item-label')}></label>
+                        <div className={cx('btn-add-new')}>
                             <Button primary onClick={handleSubmit}>
                                 Thêm
                             </Button>

@@ -25,7 +25,7 @@ function ProductDetails() {
 
     useEffect(() => {
         const fechAPI = async () => {
-            const result = await productServices.getProductDetails(param.id)
+            const result = await productServices.getProducts(param.id)
             const product = result[0]
             setTab(product.types[0])
             setDetails(...result)

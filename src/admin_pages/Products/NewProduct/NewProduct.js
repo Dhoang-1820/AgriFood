@@ -1,560 +1,611 @@
 import { TextField } from '@mui/material'
 import Box from '@mui/material/Box'
-import Autocomplete from '@mui/material/Autocomplete'
+import Dialog from '@mui/material/Dialog'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import FormControl from '@mui/material/FormControl'
+import InputLabel from '@mui/material/InputLabel'
+import InputAdornment from '@mui/material/InputAdornment'
+import MenuItem from '@mui/material/MenuItem'
+import Select from '@mui/material/Select'
 
+import { useEffect, useState } from 'react'
 import Button from '~/components/Button'
+import { EditorState, convertToRaw } from 'draft-js'
+import { Editor } from 'react-draft-wysiwyg'
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
+import draftToHtml from 'draftjs-to-html'
+
+import Validator from '~/common_services/Validator'
+
+import { getProductCategories } from '~/api_services/productCategoryServices'
+import { postProduct } from '~/api_services/productServices'
+import * as request from '~/untils/request'
+import { postProductDetail } from '~/api_services/productDetailServices'
+import { postProductImage } from '~/api_services/productImagesServices'
 
 import classNames from 'classnames/bind'
-import styles from './NewProduct.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/NewItem.module.scss'
 const cx = classNames.bind(styles)
 
 function NewProduct() {
-    const countries = [
-        { code: 'AD', label: 'Andorra', phone: '376' },
+    const [openDialog, setOpenDialog] = useState(false)
+    const [isEditor, setIsEditor] = useState(false)
+    const [isType, setIsType] = useState(false)
+    const [productCategories, setProductCategories] = useState([])
+    const [productCategoriesId, setProductCategoriesId] = useState('')
+    const [photosPreview, setPhotosPreview] = useState([])
+    const [images, setImages] = useState([])
+    const [fileNames, setFileNames] = useState([])
+    const [errorMessage, setErrorMessage] = useState({})
+
+    const [title, setTitle] = useState('')
+    const [origin, setOrigin] = useState('')
+    const [preserve, setPreserve] = useState('')
+    const [manual, setManual] = useState('')
+    const [types, setTypes] = useState([])
+    const [type, setType] = useState('')
+    const [quantity, setQuantity] = useState('')
+    const [price, setPrice] = useState('')
+    const [unit, setUnit] = useState('')
+    const [description, setDescription] = useState('')
+    const [discount, setDiscount] = useState(0)
+
+    useEffect(() => {
+        const fechAPI = async () => {
+            const result = await getProductCategories()
+            setProductCategories(result.data)
+        }
+        fechAPI()
+    }, [])
+
+    useEffect(() => {
+        setEditorValue(EditorState.moveFocusToEnd(editorValue))
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
+    //Validate
+    const fields = {
+        title,
+        unit,
+        description,
+        productCategoriesId: productCategoriesId.toString(),
+    }
+
+    const rules = [
         {
-            code: 'AE',
-            label: 'United Arab Emirates',
-            phone: '971',
-        },
-        { code: 'AF', label: 'Afghanistan', phone: '93' },
-        {
-            code: 'AG',
-            label: 'Antigua and Barbuda',
-            phone: '1-268',
-        },
-        { code: 'AI', label: 'Anguilla', phone: '1-264' },
-        { code: 'AL', label: 'Albania', phone: '355' },
-        { code: 'AM', label: 'Armenia', phone: '374' },
-        { code: 'AO', label: 'Angola', phone: '244' },
-        { code: 'AQ', label: 'Antarctica', phone: '672' },
-        { code: 'AR', label: 'Argentina', phone: '54' },
-        { code: 'AS', label: 'American Samoa', phone: '1-684' },
-        { code: 'AT', label: 'Austria', phone: '43' },
-        {
-            code: 'AU',
-            label: 'Australia',
-            phone: '61',
-            suggested: true,
-        },
-        { code: 'AW', label: 'Aruba', phone: '297' },
-        { code: 'AX', label: 'Alland Islands', phone: '358' },
-        { code: 'AZ', label: 'Azerbaijan', phone: '994' },
-        {
-            code: 'BA',
-            label: 'Bosnia and Herzegovina',
-            phone: '387',
-        },
-        { code: 'BB', label: 'Barbados', phone: '1-246' },
-        { code: 'BD', label: 'Bangladesh', phone: '880' },
-        { code: 'BE', label: 'Belgium', phone: '32' },
-        { code: 'BF', label: 'Burkina Faso', phone: '226' },
-        { code: 'BG', label: 'Bulgaria', phone: '359' },
-        { code: 'BH', label: 'Bahrain', phone: '973' },
-        { code: 'BI', label: 'Burundi', phone: '257' },
-        { code: 'BJ', label: 'Benin', phone: '229' },
-        { code: 'BL', label: 'Saint Barthelemy', phone: '590' },
-        { code: 'BM', label: 'Bermuda', phone: '1-441' },
-        { code: 'BN', label: 'Brunei Darussalam', phone: '673' },
-        { code: 'BO', label: 'Bolivia', phone: '591' },
-        { code: 'BR', label: 'Brazil', phone: '55' },
-        { code: 'BS', label: 'Bahamas', phone: '1-242' },
-        { code: 'BT', label: 'Bhutan', phone: '975' },
-        { code: 'BV', label: 'Bouvet Island', phone: '47' },
-        { code: 'BW', label: 'Botswana', phone: '267' },
-        { code: 'BY', label: 'Belarus', phone: '375' },
-        { code: 'BZ', label: 'Belize', phone: '501' },
-        {
-            code: 'CA',
-            label: 'Canada',
-            phone: '1',
-            suggested: true,
+            field: 'title',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
         },
         {
-            code: 'CC',
-            label: 'Cocos (Keeling) Islands',
-            phone: '61',
+            field: 'unit',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
         },
         {
-            code: 'CD',
-            label: 'Congo, Democratic Republic of the',
-            phone: '243',
+            field: 'description',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
         },
         {
-            code: 'CF',
-            label: 'Central African Republic',
-            phone: '236',
+            field: 'productCategoriesId',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng chọn một danh mục',
         },
-        {
-            code: 'CG',
-            label: 'Congo, Republic of the',
-            phone: '242',
-        },
-        { code: 'CH', label: 'Switzerland', phone: '41' },
-        { code: 'CI', label: "Cote d'Ivoire", phone: '225' },
-        { code: 'CK', label: 'Cook Islands', phone: '682' },
-        { code: 'CL', label: 'Chile', phone: '56' },
-        { code: 'CM', label: 'Cameroon', phone: '237' },
-        { code: 'CN', label: 'China', phone: '86' },
-        { code: 'CO', label: 'Colombia', phone: '57' },
-        { code: 'CR', label: 'Costa Rica', phone: '506' },
-        { code: 'CU', label: 'Cuba', phone: '53' },
-        { code: 'CV', label: 'Cape Verde', phone: '238' },
-        { code: 'CW', label: 'Curacao', phone: '599' },
-        { code: 'CX', label: 'Christmas Island', phone: '61' },
-        { code: 'CY', label: 'Cyprus', phone: '357' },
-        { code: 'CZ', label: 'Czech Republic', phone: '420' },
-        {
-            code: 'DE',
-            label: 'Germany',
-            phone: '49',
-            suggested: true,
-        },
-        { code: 'DJ', label: 'Djibouti', phone: '253' },
-        { code: 'DK', label: 'Denmark', phone: '45' },
-        { code: 'DM', label: 'Dominica', phone: '1-767' },
-        {
-            code: 'DO',
-            label: 'Dominican Republic',
-            phone: '1-809',
-        },
-        { code: 'DZ', label: 'Algeria', phone: '213' },
-        { code: 'EC', label: 'Ecuador', phone: '593' },
-        { code: 'EE', label: 'Estonia', phone: '372' },
-        { code: 'EG', label: 'Egypt', phone: '20' },
-        { code: 'EH', label: 'Western Sahara', phone: '212' },
-        { code: 'ER', label: 'Eritrea', phone: '291' },
-        { code: 'ES', label: 'Spain', phone: '34' },
-        { code: 'ET', label: 'Ethiopia', phone: '251' },
-        { code: 'FI', label: 'Finland', phone: '358' },
-        { code: 'FJ', label: 'Fiji', phone: '679' },
-        {
-            code: 'FK',
-            label: 'Falkland Islands (Malvinas)',
-            phone: '500',
-        },
-        {
-            code: 'FM',
-            label: 'Micronesia, Federated States of',
-            phone: '691',
-        },
-        { code: 'FO', label: 'Faroe Islands', phone: '298' },
-        {
-            code: 'FR',
-            label: 'France',
-            phone: '33',
-            suggested: true,
-        },
-        { code: 'GA', label: 'Gabon', phone: '241' },
-        { code: 'GB', label: 'United Kingdom', phone: '44' },
-        { code: 'GD', label: 'Grenada', phone: '1-473' },
-        { code: 'GE', label: 'Georgia', phone: '995' },
-        { code: 'GF', label: 'French Guiana', phone: '594' },
-        { code: 'GG', label: 'Guernsey', phone: '44' },
-        { code: 'GH', label: 'Ghana', phone: '233' },
-        { code: 'GI', label: 'Gibraltar', phone: '350' },
-        { code: 'GL', label: 'Greenland', phone: '299' },
-        { code: 'GM', label: 'Gambia', phone: '220' },
-        { code: 'GN', label: 'Guinea', phone: '224' },
-        { code: 'GP', label: 'Guadeloupe', phone: '590' },
-        { code: 'GQ', label: 'Equatorial Guinea', phone: '240' },
-        { code: 'GR', label: 'Greece', phone: '30' },
-        {
-            code: 'GS',
-            label: 'South Georgia and the South Sandwich Islands',
-            phone: '500',
-        },
-        { code: 'GT', label: 'Guatemala', phone: '502' },
-        { code: 'GU', label: 'Guam', phone: '1-671' },
-        { code: 'GW', label: 'Guinea-Bissau', phone: '245' },
-        { code: 'GY', label: 'Guyana', phone: '592' },
-        { code: 'HK', label: 'Hong Kong', phone: '852' },
-        {
-            code: 'HM',
-            label: 'Heard Island and McDonald Islands',
-            phone: '672',
-        },
-        { code: 'HN', label: 'Honduras', phone: '504' },
-        { code: 'HR', label: 'Croatia', phone: '385' },
-        { code: 'HT', label: 'Haiti', phone: '509' },
-        { code: 'HU', label: 'Hungary', phone: '36' },
-        { code: 'ID', label: 'Indonesia', phone: '62' },
-        { code: 'IE', label: 'Ireland', phone: '353' },
-        { code: 'IL', label: 'Israel', phone: '972' },
-        { code: 'IM', label: 'Isle of Man', phone: '44' },
-        { code: 'IN', label: 'India', phone: '91' },
-        {
-            code: 'IO',
-            label: 'British Indian Ocean Territory',
-            phone: '246',
-        },
-        { code: 'IQ', label: 'Iraq', phone: '964' },
-        {
-            code: 'IR',
-            label: 'Iran, Islamic Republic of',
-            phone: '98',
-        },
-        { code: 'IS', label: 'Iceland', phone: '354' },
-        { code: 'IT', label: 'Italy', phone: '39' },
-        { code: 'JE', label: 'Jersey', phone: '44' },
-        { code: 'JM', label: 'Jamaica', phone: '1-876' },
-        { code: 'JO', label: 'Jordan', phone: '962' },
-        {
-            code: 'JP',
-            label: 'Japan',
-            phone: '81',
-            suggested: true,
-        },
-        { code: 'KE', label: 'Kenya', phone: '254' },
-        { code: 'KG', label: 'Kyrgyzstan', phone: '996' },
-        { code: 'KH', label: 'Cambodia', phone: '855' },
-        { code: 'KI', label: 'Kiribati', phone: '686' },
-        { code: 'KM', label: 'Comoros', phone: '269' },
-        {
-            code: 'KN',
-            label: 'Saint Kitts and Nevis',
-            phone: '1-869',
-        },
-        {
-            code: 'KP',
-            label: "Korea, Democratic People's Republic of",
-            phone: '850',
-        },
-        { code: 'KR', label: 'Korea, Republic of', phone: '82' },
-        { code: 'KW', label: 'Kuwait', phone: '965' },
-        { code: 'KY', label: 'Cayman Islands', phone: '1-345' },
-        { code: 'KZ', label: 'Kazakhstan', phone: '7' },
-        {
-            code: 'LA',
-            label: "Lao People's Democratic Republic",
-            phone: '856',
-        },
-        { code: 'LB', label: 'Lebanon', phone: '961' },
-        { code: 'LC', label: 'Saint Lucia', phone: '1-758' },
-        { code: 'LI', label: 'Liechtenstein', phone: '423' },
-        { code: 'LK', label: 'Sri Lanka', phone: '94' },
-        { code: 'LR', label: 'Liberia', phone: '231' },
-        { code: 'LS', label: 'Lesotho', phone: '266' },
-        { code: 'LT', label: 'Lithuania', phone: '370' },
-        { code: 'LU', label: 'Luxembourg', phone: '352' },
-        { code: 'LV', label: 'Latvia', phone: '371' },
-        { code: 'LY', label: 'Libya', phone: '218' },
-        { code: 'MA', label: 'Morocco', phone: '212' },
-        { code: 'MC', label: 'Monaco', phone: '377' },
-        {
-            code: 'MD',
-            label: 'Moldova, Republic of',
-            phone: '373',
-        },
-        { code: 'ME', label: 'Montenegro', phone: '382' },
-        {
-            code: 'MF',
-            label: 'Saint Martin (French part)',
-            phone: '590',
-        },
-        { code: 'MG', label: 'Madagascar', phone: '261' },
-        { code: 'MH', label: 'Marshall Islands', phone: '692' },
-        {
-            code: 'MK',
-            label: 'Macedonia, the Former Yugoslav Republic of',
-            phone: '389',
-        },
-        { code: 'ML', label: 'Mali', phone: '223' },
-        { code: 'MM', label: 'Myanmar', phone: '95' },
-        { code: 'MN', label: 'Mongolia', phone: '976' },
-        { code: 'MO', label: 'Macao', phone: '853' },
-        {
-            code: 'MP',
-            label: 'Northern Mariana Islands',
-            phone: '1-670',
-        },
-        { code: 'MQ', label: 'Martinique', phone: '596' },
-        { code: 'MR', label: 'Mauritania', phone: '222' },
-        { code: 'MS', label: 'Montserrat', phone: '1-664' },
-        { code: 'MT', label: 'Malta', phone: '356' },
-        { code: 'MU', label: 'Mauritius', phone: '230' },
-        { code: 'MV', label: 'Maldives', phone: '960' },
-        { code: 'MW', label: 'Malawi', phone: '265' },
-        { code: 'MX', label: 'Mexico', phone: '52' },
-        { code: 'MY', label: 'Malaysia', phone: '60' },
-        { code: 'MZ', label: 'Mozambique', phone: '258' },
-        { code: 'NA', label: 'Namibia', phone: '264' },
-        { code: 'NC', label: 'New Caledonia', phone: '687' },
-        { code: 'NE', label: 'Niger', phone: '227' },
-        { code: 'NF', label: 'Norfolk Island', phone: '672' },
-        { code: 'NG', label: 'Nigeria', phone: '234' },
-        { code: 'NI', label: 'Nicaragua', phone: '505' },
-        { code: 'NL', label: 'Netherlands', phone: '31' },
-        { code: 'NO', label: 'Norway', phone: '47' },
-        { code: 'NP', label: 'Nepal', phone: '977' },
-        { code: 'NR', label: 'Nauru', phone: '674' },
-        { code: 'NU', label: 'Niue', phone: '683' },
-        { code: 'NZ', label: 'New Zealand', phone: '64' },
-        { code: 'OM', label: 'Oman', phone: '968' },
-        { code: 'PA', label: 'Panama', phone: '507' },
-        { code: 'PE', label: 'Peru', phone: '51' },
-        { code: 'PF', label: 'French Polynesia', phone: '689' },
-        { code: 'PG', label: 'Papua New Guinea', phone: '675' },
-        { code: 'PH', label: 'Philippines', phone: '63' },
-        { code: 'PK', label: 'Pakistan', phone: '92' },
-        { code: 'PL', label: 'Poland', phone: '48' },
-        {
-            code: 'PM',
-            label: 'Saint Pierre and Miquelon',
-            phone: '508',
-        },
-        { code: 'PN', label: 'Pitcairn', phone: '870' },
-        { code: 'PR', label: 'Puerto Rico', phone: '1' },
-        {
-            code: 'PS',
-            label: 'Palestine, State of',
-            phone: '970',
-        },
-        { code: 'PT', label: 'Portugal', phone: '351' },
-        { code: 'PW', label: 'Palau', phone: '680' },
-        { code: 'PY', label: 'Paraguay', phone: '595' },
-        { code: 'QA', label: 'Qatar', phone: '974' },
-        { code: 'RE', label: 'Reunion', phone: '262' },
-        { code: 'RO', label: 'Romania', phone: '40' },
-        { code: 'RS', label: 'Serbia', phone: '381' },
-        { code: 'RU', label: 'Russian Federation', phone: '7' },
-        { code: 'RW', label: 'Rwanda', phone: '250' },
-        { code: 'SA', label: 'Saudi Arabia', phone: '966' },
-        { code: 'SB', label: 'Solomon Islands', phone: '677' },
-        { code: 'SC', label: 'Seychelles', phone: '248' },
-        { code: 'SD', label: 'Sudan', phone: '249' },
-        { code: 'SE', label: 'Sweden', phone: '46' },
-        { code: 'SG', label: 'Singapore', phone: '65' },
-        { code: 'SH', label: 'Saint Helena', phone: '290' },
-        { code: 'SI', label: 'Slovenia', phone: '386' },
-        {
-            code: 'SJ',
-            label: 'Svalbard and Jan Mayen',
-            phone: '47',
-        },
-        { code: 'SK', label: 'Slovakia', phone: '421' },
-        { code: 'SL', label: 'Sierra Leone', phone: '232' },
-        { code: 'SM', label: 'San Marino', phone: '378' },
-        { code: 'SN', label: 'Senegal', phone: '221' },
-        { code: 'SO', label: 'Somalia', phone: '252' },
-        { code: 'SR', label: 'Suriname', phone: '597' },
-        { code: 'SS', label: 'South Sudan', phone: '211' },
-        {
-            code: 'ST',
-            label: 'Sao Tome and Principe',
-            phone: '239',
-        },
-        { code: 'SV', label: 'El Salvador', phone: '503' },
-        {
-            code: 'SX',
-            label: 'Sint Maarten (Dutch part)',
-            phone: '1-721',
-        },
-        {
-            code: 'SY',
-            label: 'Syrian Arab Republic',
-            phone: '963',
-        },
-        { code: 'SZ', label: 'Swaziland', phone: '268' },
-        {
-            code: 'TC',
-            label: 'Turks and Caicos Islands',
-            phone: '1-649',
-        },
-        { code: 'TD', label: 'Chad', phone: '235' },
-        {
-            code: 'TF',
-            label: 'French Southern Territories',
-            phone: '262',
-        },
-        { code: 'TG', label: 'Togo', phone: '228' },
-        { code: 'TH', label: 'Thailand', phone: '66' },
-        { code: 'TJ', label: 'Tajikistan', phone: '992' },
-        { code: 'TK', label: 'Tokelau', phone: '690' },
-        { code: 'TL', label: 'Timor-Leste', phone: '670' },
-        { code: 'TM', label: 'Turkmenistan', phone: '993' },
-        { code: 'TN', label: 'Tunisia', phone: '216' },
-        { code: 'TO', label: 'Tonga', phone: '676' },
-        { code: 'TR', label: 'Turkey', phone: '90' },
-        {
-            code: 'TT',
-            label: 'Trinidad and Tobago',
-            phone: '1-868',
-        },
-        { code: 'TV', label: 'Tuvalu', phone: '688' },
-        {
-            code: 'TW',
-            label: 'Taiwan, Province of China',
-            phone: '886',
-        },
-        {
-            code: 'TZ',
-            label: 'United Republic of Tanzania',
-            phone: '255',
-        },
-        { code: 'UA', label: 'Ukraine', phone: '380' },
-        { code: 'UG', label: 'Uganda', phone: '256' },
-        {
-            code: 'US',
-            label: 'United States',
-            phone: '1',
-            suggested: true,
-        },
-        { code: 'UY', label: 'Uruguay', phone: '598' },
-        { code: 'UZ', label: 'Uzbekistan', phone: '998' },
-        {
-            code: 'VA',
-            label: 'Holy See (Vatican City State)',
-            phone: '379',
-        },
-        {
-            code: 'VC',
-            label: 'Saint Vincent and the Grenadines',
-            phone: '1-784',
-        },
-        { code: 'VE', label: 'Venezuela', phone: '58' },
-        {
-            code: 'VG',
-            label: 'British Virgin Islands',
-            phone: '1-284',
-        },
-        {
-            code: 'VI',
-            label: 'US Virgin Islands',
-            phone: '1-340',
-        },
-        { code: 'VN', label: 'Vietnam', phone: '84' },
-        { code: 'VU', label: 'Vanuatu', phone: '678' },
-        { code: 'WF', label: 'Wallis and Futuna', phone: '681' },
-        { code: 'WS', label: 'Samoa', phone: '685' },
-        { code: 'XK', label: 'Kosovo', phone: '383' },
-        { code: 'YE', label: 'Yemen', phone: '967' },
-        { code: 'YT', label: 'Mayotte', phone: '262' },
-        { code: 'ZA', label: 'South Africa', phone: '27' },
-        { code: 'ZM', label: 'Zambia', phone: '260' },
-        { code: 'ZW', label: 'Zimbabwe', phone: '263' },
     ]
 
-    console.log(document.getElementsByClassName('MuiAutocomplete-option'))
+    const fieldTypes = {
+        type,
+        quantity,
+        price,
+    }
+
+    const ruleTypes = [
+        {
+            field: 'type',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
+        },
+        {
+            field: 'quantity',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
+        },
+        {
+            field: 'price',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
+        },
+    ]
+
+    const handleValidate = (options = rules, content = fields) => {
+        const result = Validator(options, content)
+        setErrorMessage((prev) => ({ ...prev, ...result }))
+        for (const key in result) {
+            if (!result[key]) return false
+        }
+        return true
+    }
+
+    //Validations form
+    const validations = (value, field, rule) => {
+        fields[field] = value
+        handleValidate([rule], fields[field])
+    }
+    // Title validation
+    const handleBlurTitle = (e) => {
+        validations(e.target.value, title, rules[0])
+    }
+
+    const handleInputTitle = (e) => {
+        setTitle(e.target.value)
+        validations(e.target.value, title, rules[0])
+    }
+    // Unit validation
+    const handleBlurUnit = (e) => {
+        validations(e.target.value, unit, rules[1])
+    }
+    const handleInputUnit = (e) => {
+        setUnit(e.target.value)
+        validations(e.target.value, unit, rules[1])
+    }
+    const handleChange = (e) => {
+        const id = e.target.value
+        setProductCategoriesId(id)
+        validations(id.toString(), productCategoriesId, rules[3])
+    }
+
+    // Type validation
+    const handleBlurType = (e) => {
+        validations(e.target.value, type, ruleTypes[0])
+    }
+
+    const handleInputType = (e) => {
+        setType(e.target.value)
+        validations(e.target.value, type, ruleTypes[0])
+    }
+    // Quantity validation
+    const handleBlurQuantity = (e) => {
+        validations(e.target.value, quantity, ruleTypes[1])
+    }
+
+    const handleInputQuantity = (e) => {
+        setQuantity(e.target.value)
+        validations(e.target.value, quantity, ruleTypes[1])
+    }
+    // Price validation
+    const handleBlurPrice = (e) => {
+        validations(e.target.value, price, ruleTypes[2])
+    }
+
+    const handleInputPrice = (e) => {
+        setPrice(e.target.value)
+        validations(e.target.value, price, ruleTypes[2])
+    }
+
+    //
+    const handleClose = () => {
+        setOpenDialog(false)
+        setType('')
+        setQuantity('')
+        setPrice('')
+        setErrorMessage({})
+    }
+
+    const handleAddDescription = (e) => {
+        e.preventDefault()
+        setOpenDialog(true)
+        setIsEditor(true)
+        setIsType(false)
+    }
+
+    const handleConfirmDialog = () => {
+        if (isType) {
+            const isError = handleValidate([ruleTypes[0], ruleTypes[1], ruleTypes[2]], fieldTypes)
+            if (!isError) {
+                setTypes((prev) => [...prev, { type, quantity, price }])
+                setType('')
+                setQuantity('')
+                setPrice('')
+            } else {
+                return
+            }
+        }
+        if (isEditor) {
+            setDescription(draftToHtml(convertToRaw(editorValue.getCurrentContent())))
+        }
+        setOpenDialog(false)
+    }
+    const handleCancelDialog = () => {
+        setOpenDialog(false)
+        setType('')
+        setQuantity('')
+        setPrice('')
+        setErrorMessage({})
+    }
+
+    const handleGetFileNames = () => {
+        Array.from(images).map(async (image) => {
+            const formData = new FormData()
+            formData.append('file', image)
+            const name = await request.uploadfiles(formData)
+            setFileNames((prev) => [...prev, name])
+        })
+    }
+
+    const handlePostImages = (id) => {
+        fileNames.map(async (name) => {
+            await postProductImage({ productId: id, image: name })
+        })
+    }
+
+    const handlePostDetails = (id) => {
+        types.map(async (item) => {
+            const result = await postProductDetail({
+                productId: id,
+                quantity: item.quantity,
+                type: item.type,
+                price: item.price,
+            })
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const isError = handleValidate()
+        const date = new Date()
+        const jsonDate = date.toJSON()
+
+        const fechAPI = async () => {
+            const result = await postProduct({
+                title,
+                discount,
+                createat: jsonDate,
+                updateat: null,
+                unit,
+                origin,
+                preserve,
+                manual,
+                description,
+                productCategory: productCategoriesId,
+            })
+            await handleGetFileNames()
+            await handlePostImages(result.data.data)
+            await handlePostDetails(result.data.data)
+            // result ? handleSuccess() : handleFailure()
+        }
+        if (!isError) {
+            fechAPI()
+        }
+    }
+
+    const handleBlurCategory = (e) => {
+        const id = e.target.value
+        fields.categoryId = id.toString()
+        handleValidate([rules[1]], fields.categoryId)
+    }
+
+    const handlePreviewImages = (e) => {
+        if (e.target.files) {
+            const fileArr = Array.from(e.target.files).map((file) => URL.createObjectURL(file))
+            setPhotosPreview(fileArr)
+            setImages(e.target.files)
+        }
+    }
+
+    const handleAddType = (e) => {
+        e.preventDefault()
+        setOpenDialog(true)
+        setIsType(true)
+        setIsEditor(false)
+    }
+
+    const handleRemoveType = (index) => {
+        types.splice(index, 1)
+        setTypes([...types])
+    }
+
+    const [editorValue, setEditorValue] = useState(EditorState.createEmpty())
+    const handleEditorChange = (editorState) => {
+        setEditorValue(editorState)
+    }
 
     return (
         <div className={cx('wrapper')}>
             <div className={cx('title')}>Thêm mới sản phẩm</div>
+            <Dialog
+                open={openDialog}
+                onClose={handleClose}
+                aria-labelledby='alert-dialog-title'
+                aria-describedby='alert-dialog-description'
+                fullWidth
+                maxWidth='md'
+            >
+                <DialogTitle id='alert-dialog-title'></DialogTitle>
+                <DialogContent
+                    sx={{
+                        width: '100%',
+                        overflow: 'hidden',
+                    }}
+                >
+                    {isEditor && (
+                        <div className={cx('editor-wrapper')}>
+                            <Editor
+                                editorState={editorValue}
+                                editorClassName={cx('editor', 'scrollbar-custom')}
+                                onEditorStateChange={handleEditorChange}
+                            />
+                        </div>
+                    )}
+                    {isType && (
+                        <div className={cx('add-type')}>
+                            <div className={cx('input-item')}>
+                                <label htmlFor='type' className={cx('item-label')}>
+                                    Loại
+                                    <span className={cx('red-text')}>*</span>
+                                </label>
+                                <TextField
+                                    rows={3}
+                                    size='small'
+                                    fullWidth
+                                    id='type'
+                                    label=' Loại'
+                                    value={type}
+                                    error={Boolean(errorMessage.type)}
+                                    helperText={errorMessage.type}
+                                    onChange={handleInputType}
+                                    onBlur={handleBlurType}
+                                />
+                            </div>
+                            <div className={cx('input-item')}>
+                                <label htmlFor='quantity' className={cx('item-label')}>
+                                    Số lượng
+                                    <span className={cx('red-text')}>*</span>
+                                </label>
+                                <TextField
+                                    InputProps={{
+                                        type: 'number',
+                                    }}
+                                    rows={3}
+                                    size='small'
+                                    fullWidth
+                                    id='quantity'
+                                    label='Số lượng'
+                                    value={quantity}
+                                    error={Boolean(errorMessage.quantity)}
+                                    helperText={errorMessage.quantity}
+                                    onChange={handleInputQuantity}
+                                    onBlur={handleBlurQuantity}
+                                />
+                            </div>
+                            <div className={cx('input-item')}>
+                                <label htmlFor='price' className={cx('item-label')}>
+                                    Giá
+                                    <span className={cx('red-text')}>*</span>
+                                </label>
+                                <TextField
+                                    InputProps={{
+                                        type: 'number',
+                                        startAdornment: <InputAdornment position='start'>VNĐ</InputAdornment>,
+                                    }}
+                                    rows={3}
+                                    size='small'
+                                    fullWidth
+                                    id='price'
+                                    label='Giá'
+                                    value={price}
+                                    error={Boolean(errorMessage.price)}
+                                    helperText={errorMessage.price}
+                                    onChange={handleInputPrice}
+                                    onBlur={handleBlurPrice}
+                                />
+                            </div>
+                        </div>
+                    )}
+                </DialogContent>
+                <div className={cx('btn-dialog')}>
+                    <Button primary onClick={handleConfirmDialog}>
+                        Xác nhận
+                    </Button>
+                    <Button disable onClick={handleCancelDialog}>
+                        Huỷ
+                    </Button>
+                </div>
+            </Dialog>
             <Box className={cx('form')} component='form' noValidate autoComplete='on'>
-                <div className={cx('new-product-product')}>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='category' className={cx('new-product-label')}>
+                <div className={cx('input-list')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='category' className={cx('item-label')}>
                             Danh mục sản phẩm
                             <span className={cx('red-text')}>*</span>
                         </label>
 
-                        <Autocomplete
-                            id='commune'
-                            // sx={{ width: 700 }}
-                            size='small'
-                            options={countries}
-                            autoHighlight
-                            getOptionLabel={(option) => option.label}
-                            renderOption={(props, option) => (
-                                <Box component='li' sx={{ '& > img': { mr: 2, flexShrink: 0 } }} {...props}>
-                                    {option.label} ({option.code}) +{option.phone}
-                                </Box>
+                        <FormControl fullWidth size='small'>
+                            <InputLabel id='categoryId'>Danh mục </InputLabel>
+                            <Select
+                                labelId='categoryId'
+                                value={productCategoriesId}
+                                label='Danh mục'
+                                onChange={handleChange}
+                                onBlur={handleBlurCategory}
+                                error={Boolean(errorMessage.productCategoriesId)}
+                            >
+                                {productCategories.map((category, index) => (
+                                    <MenuItem key={index} value={category.id}>
+                                        {category.title}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {Boolean(errorMessage.productCategoriesId) && (
+                                <span className={cx('err-text')}>Vui lòng chọn một danh mục</span>
                             )}
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label='Category'
-                                    inputProps={{
-                                        ...params.inputProps,
-                                        autoComplete: 'new-password', // disable autocomplete and autofill
-                                    }}
-                                />
-                            )}
-                        />
+                        </FormControl>
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='name' className={cx('new-product-label')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='name' className={cx('item-label')}>
                             Tên sản phẩm
                             <span className={cx('red-text')}>*</span>
                         </label>
-                        <TextField size='small' fullWidth id='name' label='Tên sản phẩm' />
+                        <TextField
+                            size='small'
+                            fullWidth
+                            id='name'
+                            label='Tên sản phẩm'
+                            value={title}
+                            error={Boolean(errorMessage.title)}
+                            helperText={errorMessage.title}
+                            onChange={handleInputTitle}
+                            onBlur={handleBlurTitle}
+                        />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='origin' className={cx('new-product-label')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='origin' className={cx('item-label')}>
                             Xuất Xứ
-                            <span className={cx('red-text')}>*</span>
                         </label>
                         <TextField
                             size='small'
                             fullWidth
                             id='origin'
                             label='Xuất Xứ'
-                            // error
-                            //  helperText='Thông tin bắt buộc'
+                            value={origin}
+                            onChange={(e) => setOrigin(e.target.value)}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='preserve' className={cx('new-product-label')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='preserve' className={cx('item-label')}>
                             Bảo Quản
-                            <span className={cx('red-text')}>*</span>
                         </label>
                         <TextField
                             size='small'
                             fullWidth
                             id='preserve'
                             label='Bảo Quản'
-                            // error
-                            //  helperText='Thông tin bắt buộc'
+                            value={preserve}
+                            onChange={(e) => setPreserve(e.target.value)}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='price' className={cx('new-product-label')}>
-                            Giá
+                    <div className={cx('input-item')}>
+                        <label htmlFor='user-manual' className={cx('item-label')}>
+                            Hướng dẫn sử dụng
                         </label>
                         <TextField
-                            InputProps={{ type: 'number' }}
+                            rows={3}
+                            multiline
+                            size='small'
+                            fullWidth
+                            id='user-manual'
+                            label='Hướng dẫn sử dụng'
+                            value={manual}
+                            onChange={(e) => setManual(e.target.value)}
+                        />
+                    </div>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='unit' className={cx('item-label')}>
+                            Đơn vị
+                            <span className={cx('red-text')}>*</span>
+                        </label>
+                        <TextField
                             rows={3}
                             size='small'
                             fullWidth
-                            id='price'
-                            label='Giá'
-                            // error
-                            // helperText='Thông tin bắt buộc'
+                            id='unit'
+                            label='Đơn vị'
+                            value={unit}
+                            error={Boolean(errorMessage.unit)}
+                            helperText={errorMessage.unit}
+                            onChange={handleInputUnit}
+                            onBlur={handleBlurUnit}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='quantity' className={cx('new-product-label')}>
-                            Số lượng
+                    <div className={cx('input-item')}>
+                        <label htmlFor='type' className={cx('item-label')}>
+                            Loại
                         </label>
-                        <TextField
-                            InputProps={{ type: 'number' }}
-                            rows={3}
-                            size='small'
-                            fullWidth
-                            id='quantity'
-                            label='Số lượng'
-                            // error
-                            // helperText='Thông tin bắt buộc'
-                        />
+                        <div className={cx('input-multiple-wrapper')}>
+                            <div className={cx('selected-list')}>
+                                {types.map((type, index) => (
+                                    <div className={cx('selected-item')} key={index}>
+                                        <div className={cx('selected-title')}>{type.type}</div>
+                                        <div className={cx('remove-btn')} onClick={() => handleRemoveType(index)}>
+                                            x
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            {/* <input
+                                className={cx('input-multiple-choice')}
+                                id='type'
+                                label='Loại'
+                                // error
+                                // helperText='Thông tin bắt buộc'
+                            /> */}
+                            <button className={cx('add-btn')} onClick={handleAddType}>
+                                <div className={cx('add-btn-title')}>Thêm mới</div>
+                            </button>
+                        </div>
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='discount' className={cx('new-product-label')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='discount' className={cx('item-label')}>
                             Giảm giá
                         </label>
                         <TextField
-                            InputProps={{ type: 'number' }}
+                            InputProps={{
+                                type: 'number',
+                                startAdornment: <InputAdornment position='start'>%</InputAdornment>,
+                            }}
                             rows={3}
                             size='small'
                             fullWidth
                             id='discount'
                             label='Giảm giá'
-                            // error
-                            // helperText='Thông tin bắt buộc'
+                            value={discount}
+                            onChange={(e) => setDiscount(e.target.value)}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label className={cx('new-product-label')}></label>
-                        <div className={cx('btn-new-product')}>
-                            <Button primary onClick={(e) => e.preventDefault()}>
+                    <div className={cx('input-item')}>
+                        <label className={cx('item-label', 'thumb')}>
+                            Mô tả sản phẩm
+                            <span className={cx('red-text')}>*</span>
+                        </label>
+
+                        <button className={cx('add-btn')} onClick={handleAddDescription}>
+                            <div className={cx('add-btn-title')}>Thêm mới</div>
+                        </button>
+                        {Boolean(errorMessage.description) && (
+                            <span className={cx('err-text')}>Vui lòng thêm mô tả sản phẩm</span>
+                        )}
+                    </div>
+                    <div className={cx('input-item', 'images')}>
+                        <label htmlFor='photos' className={cx('item-label', 'thumb')}>
+                            Ảnh sản phẩm
+                            <span className={cx('red-text')}>*</span>
+                        </label>
+                        <input
+                            // ref={fileRef}
+                            type='file'
+                            label='photos'
+                            multiple
+                            className={cx('input-file')}
+                            onChange={handlePreviewImages}
+                        />
+                        {Boolean(photosPreview.length) &&
+                            photosPreview.map((photo, index) => (
+                                <img className={cx('preview-img')} src={photo} alt='preview' key={index} />
+                            ))}
+                        {Boolean(errorMessage.description) && <span className={cx('err-text')}>Vui lòng chọn ảnh</span>}
+                    </div>
+                    <div className={cx('input-item')}>
+                        <label className={cx('item-label')}></label>
+                        <div className={cx('btn-add-new')}>
+                            <Button primary onClick={handleSubmit}>
                                 Thêm
                             </Button>
                             <Button className={cx('btn-cancel')} disable onClick={(e) => e.preventDefault()}>

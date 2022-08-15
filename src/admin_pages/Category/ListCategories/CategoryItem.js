@@ -16,7 +16,7 @@ import Popup from '~/components/Popup/Popup'
 import Toast from '~/components/Toast'
 
 import classNames from 'classnames/bind'
-import styles from './ListCategories.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/ListItem.module.scss'
 const cx = classNames.bind(styles)
 
 function CategoryItem({ category, isChecked, handleChecked, imageSrc, Save }) {

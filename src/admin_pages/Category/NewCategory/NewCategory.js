@@ -8,7 +8,7 @@ import Validator from '~/common_services/Validator'
 
 import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames/bind'
-import styles from './NewCategory.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/NewItem.module.scss'
 const cx = classNames.bind(styles)
 
 function NewCategory() {
@@ -77,6 +77,7 @@ function NewCategory() {
         const isError = handleValidate()
         const formData = new FormData()
         formData.append('file', thumb)
+        console.log(formData)
         const fechAPI = async () => {
             const filesName = await request.uploadfiles(formData)
             const result = await postCategory({ title, thumbnail: filesName })
@@ -110,9 +111,9 @@ function NewCategory() {
             <div className={cx('title')}>Thêm mới danh mục</div>
             <Toast success={successToast} fail={errorToast} handleClose={handleCloseToast} />
             <Box className={cx('form')} component='form' noValidate autoComplete='on'>
-                <div className={cx('new-product-product')}>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='name' className={cx('new-product-label')}>
+                <div className={cx('input-list')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='name' className={cx('item-label')}>
                             Tên danh mục
                             <span className={cx('red-text')}>*</span>
                         </label>
@@ -128,8 +129,8 @@ function NewCategory() {
                             helperText={errorMessage.title}
                         />
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='thumb' className={cx('new-product-label', 'thumb')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='thumb' className={cx('item-label', 'thumb')}>
                             Thumbnails
                             <span className={cx('red-text')}>*</span>
                         </label>
@@ -142,9 +143,9 @@ function NewCategory() {
                         />
                         {thumbPreview && <img className={cx('preview-img')} src={thumbPreview} alt='preview' />}
                     </div>
-                    <div className={cx('new-product-item')}>
-                        <label htmlFor='origin' className={cx('new-product-label')}></label>
-                        <div className={cx('btn-new-product')}>
+                    <div className={cx('input-item')}>
+                        <label htmlFor='origin' className={cx('item-label')}></label>
+                        <div className={cx('btn-add-new')}>
                             <Button primary onClick={handeSubmitCategory}>
                                 Thêm
                             </Button>

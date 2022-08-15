@@ -13,7 +13,7 @@ import Popup from '~/components/Popup/Popup'
 import admin from '~/config/admin'
 
 import classNames from 'classnames/bind'
-import styles from './ListCategories.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/ListItem.module.scss'
 const cx = classNames.bind(styles)
 
 function ListCategories() {

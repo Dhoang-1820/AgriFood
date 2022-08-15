@@ -19,7 +19,7 @@ import Popup from '~/components/Popup/Popup'
 import Toast from '~/components/Toast'
 
 import classNames from 'classnames/bind'
-import styles from './ListProductCategory.module.scss'
+import styles from '~/admin_pages/components/CommonStyles/ListItem.module.scss'
 const cx = classNames.bind(styles)
 
 function ProductCategoryItem({ productCategory, isChecked, handleChecked, Save }) {
@@ -168,11 +168,8 @@ function ProductCategoryItem({ productCategory, isChecked, handleChecked, Save }
         return title.trim() !== productCategory.title || title === '' || categoryId !== productCategory.categoryid
     }
 
-    console.log('render at function')
-
     return (
         <div className={cx('category-item')} key={productCategory.id}>
-            {console.log('render')}
             <input
                 checked={isChecked}
                 type='checkbox'
@@ -183,7 +180,14 @@ function ProductCategoryItem({ productCategory, isChecked, handleChecked, Save }
             <div className={cx('collumn-item')}>
                 {!isEdit && <p className={cx('text-edit')}>{category.title}</p>}
                 {isEdit && (
-                    <FormControl fullWidth size='small'>
+                    <FormControl
+                        size='small'
+                        sx={{
+                            '& .MuiFormControl-root, ': {
+                                minWidth: '40%',
+                            },
+                        }}
+                    >
                         <InputLabel id='categoryId'>Danh mục </InputLabel>
                         <Select labelId='categoryId' value={categoryId} label='Danh mục' onChange={handleChange}>
                             {categories.map((item, index) => (
@@ -198,7 +202,7 @@ function ProductCategoryItem({ productCategory, isChecked, handleChecked, Save }
                     </FormControl>
                 )}
             </div>
-            <div className={cx('collumn-item', 'image-item')}>
+            <div className={cx('collumn-item')}>
                 {!isEdit && <p className={cx('text-edit')}>{title}</p>}
                 {isEdit && (
                     <TextField
