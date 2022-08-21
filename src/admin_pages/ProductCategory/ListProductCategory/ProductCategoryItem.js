@@ -13,7 +13,7 @@ import FormControl from '@mui/material/FormControl'
 
 import { useEffect, useState } from 'react'
 import { getCategories, getCategoryById } from '~/api_services/categoryServices'
-import { putProductCCategory, deleteProductCategory } from '~/api_services/productCategoryServices'
+import { putProductCategory, deleteProductCategory } from '~/api_services/productCategoryServices'
 import Validator from '~/common_services/Validator'
 import Popup from '~/components/Popup/Popup'
 import Toast from '~/components/Toast'
@@ -105,7 +105,7 @@ function ProductCategoryItem({ productCategory, isChecked, handleChecked, Save }
         const isError = handleValidate()
         let data = getData()
         const fechAPI = async () => {
-            await putProductCCategory(data).then((value) => {
+            await putProductCategory(data).then((value) => {
                 if (value.status === 200) {
                     setIsEdit(false)
                     Save()

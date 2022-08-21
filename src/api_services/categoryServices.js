@@ -11,11 +11,7 @@ export const getCategories = async () => {
 
 export const getCategoryById = async (id) => {
     try {
-        const res = await request.get('category', {
-            params: {
-                id: id,
-            },
-        })
+        const res = await request.get(`category/id/${id}`)
         return res.data
     } catch (err) {
         console.log(err)

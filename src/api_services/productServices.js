@@ -30,6 +30,7 @@ export const putProduct = async (data) => {
 export const deleteProduct = async (data) => {
     try {
         const res = await request.remove(`product/delete/${data}`)
+        console.log(res)
         return res
     } catch (error) {
         return false

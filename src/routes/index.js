@@ -15,8 +15,8 @@ import TransactionHistory from '~/pages/User/TransactionHistory'
 import NewAddress from '~/pages/User/NewAddress'
 
 // Admin pages
-import Products from '~/admin_pages/Products'
 import NewProduct from '~/admin_pages/Products/NewProduct'
+import ListProducts from '~/admin_pages/Products/ListProducts'
 import NewCategory from '~/admin_pages/Category/NewCategory'
 import ListCategories from '~/admin_pages/Category/ListCategories'
 import NewProductCategory from '~/admin_pages/ProductCategory/NewProductCategory'
@@ -41,6 +41,7 @@ const publicRoutes = [
 
 const privateRoutes = [
     { path: config.admin.newProduct, component: NewProduct },
+    { path: config.admin.listProducts, component: ListProducts },
     { path: config.admin.newCategory, component: NewCategory },
     { path: config.admin.listCategories, component: ListCategories },
     { path: config.admin.newProductCategory, component: NewProductCategory },

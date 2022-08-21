@@ -6,7 +6,7 @@ import Select from '@mui/material/Select'
 import FormControl from '@mui/material/FormControl'
 
 import { useEffect, useRef, useState } from 'react'
-import { postProductCCategory } from '~/api_services/productCategoryServices'
+import { postProductCategory } from '~/api_services/productCategoryServices'
 import { getCategories } from '~/api_services/categoryServices'
 import * as request from '~/untils/request'
 import Button from '~/components/Button'
@@ -86,8 +86,7 @@ function NewProductCategory() {
         e.preventDefault()
         const isError = handleValidate()
         const fechAPI = async () => {
-            const result = await postProductCCategory({ categoryid: categoryId, title })
-            console.log(result)
+            const result = await postProductCategory({ categoryid: categoryId, title })
             result ? handleSuccess() : handleFailure()
         }
         if (!isError) {

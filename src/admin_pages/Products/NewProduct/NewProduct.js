@@ -8,8 +8,9 @@ import InputLabel from '@mui/material/InputLabel'
 import InputAdornment from '@mui/material/InputAdornment'
 import MenuItem from '@mui/material/MenuItem'
 import Select from '@mui/material/Select'
+import CloseIcon from '@mui/icons-material/Close'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Button from '~/components/Button'
 import { EditorState, convertToRaw } from 'draft-js'
 import { Editor } from 'react-draft-wysiwyg'
@@ -17,6 +18,7 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import draftToHtml from 'draftjs-to-html'
 
 import Validator from '~/common_services/Validator'
+import Toast from '~/components/Toast'
 
 import { getProductCategories } from '~/api_services/productCategoryServices'
 import { postProduct } from '~/api_services/productServices'
@@ -36,7 +38,7 @@ function NewProduct() {
     const [productCategoriesId, setProductCategoriesId] = useState('')
     const [photosPreview, setPhotosPreview] = useState([])
     const [images, setImages] = useState([])
-    const [fileNames, setFileNames] = useState([])
+    const [imageNames, setImageNames] = useState('')
     const [errorMessage, setErrorMessage] = useState({})
 
     const [title, setTitle] = useState('')
@@ -49,7 +51,13 @@ function NewProduct() {
     const [price, setPrice] = useState('')
     const [unit, setUnit] = useState('')
     const [description, setDescription] = useState('')
+    const [totalQuantity, setTotalQuantity] = useState('')
     const [discount, setDiscount] = useState(0)
+
+    const [successToast, setSuccessToast] = useState(false)
+    const [errorToast, setErrorToast] = useState(false)
+
+    const [editorValue, setEditorValue] = useState(EditorState.createEmpty())
 
     useEffect(() => {
         const fechAPI = async () => {
@@ -62,7 +70,9 @@ function NewProduct() {
     useEffect(() => {
         setEditorValue(EditorState.moveFocusToEnd(editorValue))
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [isEditor])
+
+    const fileRef = useRef()
 
     //Validate
     const fields = {
@@ -70,6 +80,8 @@ function NewProduct() {
         unit,
         description,
         productCategoriesId: productCategoriesId.toString(),
+        imageNames,
+        totalQuantity,
     }
 
     const rules = [
@@ -96,6 +108,18 @@ function NewProduct() {
             method: 'isEmpty',
             validWhen: false,
             message: 'Vui lòng chọn một danh mục',
+        },
+        {
+            field: 'imageNames',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng chọn ảnh',
+        },
+        {
+            field: 'totalQuantity',
+            method: 'isEmpty',
+            validWhen: false,
+            message: 'Vui lòng điền trường này',
         },
     ]
 
@@ -130,7 +154,7 @@ function NewProduct() {
         const result = Validator(options, content)
         setErrorMessage((prev) => ({ ...prev, ...result }))
         for (const key in result) {
-            if (!result[key]) return false
+            if (result[key]) return false
         }
         return true
     }
@@ -156,6 +180,14 @@ function NewProduct() {
     const handleInputUnit = (e) => {
         setUnit(e.target.value)
         validations(e.target.value, unit, rules[1])
+    }
+    // Total quantity
+    const handleInputTotalQuantity = (e) => {
+        setTotalQuantity(e.target.value)
+        validations(e.target.value, totalQuantity, rules[5])
+    }
+    const handleBlurTotalQuantity = (e) => {
+        validations(e.target.value, totalQuantity, rules[5])
     }
     const handleChange = (e) => {
         const id = e.target.value
@@ -197,6 +229,8 @@ function NewProduct() {
         setType('')
         setQuantity('')
         setPrice('')
+        setIsEditor(false)
+        setIsType(false)
         setErrorMessage({})
     }
 
@@ -210,7 +244,7 @@ function NewProduct() {
     const handleConfirmDialog = () => {
         if (isType) {
             const isError = handleValidate([ruleTypes[0], ruleTypes[1], ruleTypes[2]], fieldTypes)
-            if (!isError) {
+            if (isError) {
                 setTypes((prev) => [...prev, { type, quantity, price }])
                 setType('')
                 setQuantity('')
@@ -220,10 +254,15 @@ function NewProduct() {
             }
         }
         if (isEditor) {
-            setDescription(draftToHtml(convertToRaw(editorValue.getCurrentContent())))
+            const data = editorValue.getCurrentContent().hasText()
+                ? draftToHtml(convertToRaw(editorValue.getCurrentContent()))
+                : ''
+            validations(data, description, rules[2])
+            setDescription(data)
         }
         setOpenDialog(false)
     }
+
     const handleCancelDialog = () => {
         setOpenDialog(false)
         setType('')
@@ -232,30 +271,64 @@ function NewProduct() {
         setErrorMessage({})
     }
 
-    const handleGetFileNames = () => {
-        Array.from(images).map(async (image) => {
-            const formData = new FormData()
-            formData.append('file', image)
-            const name = await request.uploadfiles(formData)
-            setFileNames((prev) => [...prev, name])
-        })
+    const handleCloseToast = (event, reason) => {
+        if (reason === 'clickaway') {
+            return
+        }
+        setSuccessToast(false)
+        setErrorToast(false)
     }
 
-    const handlePostImages = (id) => {
-        fileNames.map(async (name) => {
+    const handleSuccess = () => {
+        setTitle('')
+        setOrigin('')
+        setPreserve('')
+        setManual('')
+        setTypes([])
+        setType('')
+        setQuantity('')
+        setPrice('')
+        setUnit('')
+        setTotalQuantity('')
+        setDescription('')
+        setDiscount(0)
+        setPhotosPreview([])
+        setEditorValue(EditorState.createEmpty())
+        fileRef.current.value = ''
+        setSuccessToast(true)
+    }
+
+    const handleFailure = () => {
+        setErrorToast(true)
+    }
+
+    const handleGetFileNames = () => {
+        return Promise.all(
+            Array.from(images).map((image) => {
+                const formData = new FormData()
+                formData.append('file', image)
+                return request.uploadfiles(formData)
+            }),
+        )
+    }
+
+    const handlePostImages = (id, fileNames) => {
+        fileNames.forEach(async (name) => {
             await postProductImage({ productId: id, image: name })
         })
     }
 
     const handlePostDetails = (id) => {
-        types.map(async (item) => {
-            const result = await postProductDetail({
-                productId: id,
-                quantity: item.quantity,
-                type: item.type,
-                price: item.price,
-            })
-        })
+        return Promise.all(
+            types.map((item) => {
+                return postProductDetail({
+                    productId: id,
+                    quantity: item.quantity,
+                    type: item.type,
+                    price: item.price,
+                })
+            }),
+        )
     }
 
     const handleSubmit = (e) => {
@@ -263,7 +336,6 @@ function NewProduct() {
         const isError = handleValidate()
         const date = new Date()
         const jsonDate = date.toJSON()
-
         const fechAPI = async () => {
             const result = await postProduct({
                 title,
@@ -273,18 +345,40 @@ function NewProduct() {
                 unit,
                 origin,
                 preserve,
-                manual,
+                userManual: manual,
+                quantity: totalQuantity,
                 description,
                 productCategory: productCategoriesId,
             })
-            await handleGetFileNames()
-            await handlePostImages(result.data.data)
+
+            await handleGetFileNames().then((fileNames) => handlePostImages(result.data.data, fileNames))
             await handlePostDetails(result.data.data)
-            // result ? handleSuccess() : handleFailure()
+            result ? handleSuccess() : handleFailure()
         }
-        if (!isError) {
+        if (isError) {
             fechAPI()
         }
+    }
+
+    const handleCancel = (e) => {
+        e.preventDefault()
+        setTitle('')
+        setOrigin('')
+        setPreserve('')
+        setManual('')
+        setTypes([])
+        setType('')
+        setQuantity('')
+        setPrice('')
+        setUnit('')
+        setTotalQuantity('')
+        setDescription('')
+        setDiscount('')
+        setPhotosPreview([])
+        setProductCategoriesId('')
+        setEditorValue(EditorState.createEmpty())
+        fileRef.current.value = ''
+        setErrorMessage({})
     }
 
     const handleBlurCategory = (e) => {
@@ -298,6 +392,8 @@ function NewProduct() {
             const fileArr = Array.from(e.target.files).map((file) => URL.createObjectURL(file))
             setPhotosPreview(fileArr)
             setImages(e.target.files)
+            setImageNames(e.target.value)
+            validations(e.target.value, imageNames, rules[4])
         }
     }
 
@@ -313,7 +409,6 @@ function NewProduct() {
         setTypes([...types])
     }
 
-    const [editorValue, setEditorValue] = useState(EditorState.createEmpty())
     const handleEditorChange = (editorState) => {
         setEditorValue(editorState)
     }
@@ -411,6 +506,7 @@ function NewProduct() {
                         </div>
                     )}
                 </DialogContent>
+
                 <div className={cx('btn-dialog')}>
                     <Button primary onClick={handleConfirmDialog}>
                         Xác nhận
@@ -526,6 +622,27 @@ function NewProduct() {
                         />
                     </div>
                     <div className={cx('input-item')}>
+                        <label htmlFor='totalQuantity' className={cx('item-label')}>
+                            Số lượng
+                            <span className={cx('red-text')}>*</span>
+                        </label>
+                        <TextField
+                            InputProps={{
+                                type: 'number',
+                            }}
+                            rows={3}
+                            size='small'
+                            fullWidth
+                            id='totalQuantity'
+                            label='Số lượng'
+                            value={totalQuantity}
+                            error={Boolean(errorMessage.totalQuantity)}
+                            helperText={errorMessage.totalQuantity}
+                            onChange={handleInputTotalQuantity}
+                            onBlur={handleBlurTotalQuantity}
+                        />
+                    </div>
+                    <div className={cx('input-item')}>
                         <label htmlFor='type' className={cx('item-label')}>
                             Loại
                         </label>
@@ -535,7 +652,7 @@ function NewProduct() {
                                     <div className={cx('selected-item')} key={index}>
                                         <div className={cx('selected-title')}>{type.type}</div>
                                         <div className={cx('remove-btn')} onClick={() => handleRemoveType(index)}>
-                                            x
+                                            <CloseIcon />
                                         </div>
                                     </div>
                                 ))}
@@ -589,18 +706,19 @@ function NewProduct() {
                             <span className={cx('red-text')}>*</span>
                         </label>
                         <input
-                            // ref={fileRef}
+                            ref={fileRef}
                             type='file'
                             label='photos'
                             multiple
                             className={cx('input-file')}
+                            // value={setImageNames}
                             onChange={handlePreviewImages}
                         />
                         {Boolean(photosPreview.length) &&
                             photosPreview.map((photo, index) => (
                                 <img className={cx('preview-img')} src={photo} alt='preview' key={index} />
                             ))}
-                        {Boolean(errorMessage.description) && <span className={cx('err-text')}>Vui lòng chọn ảnh</span>}
+                        {Boolean(errorMessage.imageNames) && <span className={cx('err-text')}>Vui lòng chọn ảnh</span>}
                     </div>
                     <div className={cx('input-item')}>
                         <label className={cx('item-label')}></label>
@@ -608,13 +726,20 @@ function NewProduct() {
                             <Button primary onClick={handleSubmit}>
                                 Thêm
                             </Button>
-                            <Button className={cx('btn-cancel')} disable onClick={(e) => e.preventDefault()}>
+                            <Button className={cx('btn-cancel')} disable onClick={handleCancel}>
                                 Huỷ
                             </Button>
                         </div>
                     </div>
                 </div>
             </Box>
+            <Toast
+                success={successToast}
+                fail={errorToast}
+                handleClose={handleCloseToast}
+                textSuccess='Thêm thành công!'
+                textFailure='Thêm thất bại!'
+            />
         </div>
     )
 }

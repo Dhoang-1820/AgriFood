@@ -21,7 +21,7 @@ export default function Toast({ success = false, fail = false, handleClose, text
         <div>
             <Snackbar
                 open={success}
-                autoHideDuration={2000}
+                autoHideDuration={1000}
                 onClose={handleClose}
                 message='Note archived'
                 action={action}

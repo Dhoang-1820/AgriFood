@@ -106,6 +106,11 @@ body {
     .MuiSelect-select {
         padding: 8.5px 14px;
     }
+    .MuiFormControl-root {
+        input {
+            min-width: 10%;
+        }
+    }
 }
 
 .scrollbar-custom {
@@ -138,5 +143,11 @@ body {
     &::-webkit-scrollbar-track {
         border-radius: 0;
         background-color: rgba(0, 0, 0, 0);
+    }
+}
+
+.scrollbar-custom.white {
+    &::-webkit-scrollbar-thumb {
+        background-color: rgba(255, 255, 255, 0.5);
     }
 }

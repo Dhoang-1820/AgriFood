@@ -5,9 +5,10 @@ const ROUTES_PRODUCT_CATEGORY = DEFAULT_ROUTES + '/products-category'
 
 const admin = {
     home: DEFAULT_ROUTES,
-    listCategories: ROUTES_CATEGORY + '/list',
     newProduct: ROUTES_PRODUCT + '/new',
+    listProducts: ROUTES_PRODUCT + '/list',
     newCategory: ROUTES_CATEGORY + '/new',
+    listCategories: ROUTES_CATEGORY + '/list',
     newProductCategory: ROUTES_PRODUCT_CATEGORY + '/new',
     listProductCategory: ROUTES_PRODUCT_CATEGORY + '/list',
 }

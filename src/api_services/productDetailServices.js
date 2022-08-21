@@ -1,8 +1,8 @@
 import * as request from '~/untils/request'
 
-export const getProductDetails = async () => {
+export const getProductDetailsByProductId = async (id) => {
     try {
-        const res = await request.get('product-details')
+        const res = await request.get(`product-details/parent/${id}`)
         return res.data
     } catch (err) {
         console.log(err)
@@ -12,7 +12,7 @@ export const getProductDetails = async () => {
 export const postProductDetail = async (data) => {
     try {
         const res = await request.post('product-detail', data)
-        return res
+        return res.data
     } catch (error) {
         return false
     }
@@ -21,7 +21,7 @@ export const postProductDetail = async (data) => {
 export const putProductDetail = async (data) => {
     try {
         const res = await request.put('product-detail/edit', data)
-        return res
+        return res.data
     } catch (error) {
         console.log(error)
     }

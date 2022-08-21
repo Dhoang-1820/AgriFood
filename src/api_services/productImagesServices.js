@@ -9,6 +9,15 @@ export const getProductImages = async () => {
     }
 }
 
+export const getProductImagesByProductId = async (id) => {
+    try {
+        const res = await request.get(`product-images/productId/${id}`)
+        return res.data
+    } catch (err) {
+        console.log(err)
+    }
+}
+
 export const postProductImage = async (data) => {
     try {
         const res = await request.post('product-image', data)

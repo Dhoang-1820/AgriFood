@@ -28,6 +28,7 @@ function CategoryItem({ category, isChecked, handleChecked, imageSrc, Save }) {
     const [thumb, setThumb] = useState()
     const [errorMessage, setErrorMessage] = useState({})
     const [title, setTitle] = useState(category.title)
+
     const imageRef = useRef()
 
     useLayoutEffect(() => {
@@ -35,9 +36,9 @@ function CategoryItem({ category, isChecked, handleChecked, imageSrc, Save }) {
     }, [category.title])
 
     useEffect(() => {
-        const fechAPI = async () => {
+        const fechAPI = () => {
             try {
-                const result = await request.getImages(imageSrc)
+                const result = request.getImages(imageSrc)
                 setImage(result)
             } catch (error) {
                 console.log(error)

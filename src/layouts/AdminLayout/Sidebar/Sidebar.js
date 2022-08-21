@@ -1,10 +1,9 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import ShoppingBagIcon from '@mui/icons-material/ShoppingBag'
-import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined'
-import ListAltIcon from '@mui/icons-material/ListAlt'
 import AppsIcon from '@mui/icons-material/Apps'
 import ExpandLess from '@mui/icons-material/ExpandLess'
 import ExpandMore from '@mui/icons-material/ExpandMore'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined'
+import ListAltIcon from '@mui/icons-material/ListAlt'
 import Collapse from '@mui/material/Collapse'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
@@ -17,10 +16,10 @@ import admin from '~/config/admin'
 
 import { useState } from 'react'
 
-import classNames from 'classnames/bind'
-import styles from './Sidebar.module.scss'
 import { Box } from '@mui/material'
+import classNames from 'classnames/bind'
 import { Link } from 'react-router-dom'
+import styles from './Sidebar.module.scss'
 const cx = classNames.bind(styles)
 
 function Sidebar() {
@@ -47,7 +46,7 @@ function Sidebar() {
                 <div className={cx('header-title')}>Agrifoods admin</div>
             </div>
 
-            <div className={cx('content')}>
+            <div className={cx('content', 'scrollbar-custom', 'white')}>
                 <Box
                     sx={{
                         '& .MuiListItemButton-root, ': {
@@ -147,7 +146,6 @@ function Sidebar() {
                                 </Link>
                             </List>
                         </Collapse>
-
                         {/* Products */}
                         <ListItemButton onClick={handleClickProduct}>
                             <ListItemIcon>
@@ -158,9 +156,11 @@ function Sidebar() {
                         </ListItemButton>
                         <Collapse in={openProduct} timeout='auto' unmountOnExit>
                             <List component='div' disablePadding>
-                                <ListItemButton sx={{ pl: 4 }}>
-                                    <ListItemText primary='Danh sách' />
-                                </ListItemButton>
+                                <Link to={admin.listProducts}>
+                                    <ListItemButton sx={{ pl: 4 }}>
+                                        <ListItemText primary='Danh sách' />
+                                    </ListItemButton>
+                                </Link>
                                 <Link to={admin.newProduct}>
                                     <ListItemButton sx={{ pl: 4 }}>
                                         <ListItemText primary='Thêm mới' />

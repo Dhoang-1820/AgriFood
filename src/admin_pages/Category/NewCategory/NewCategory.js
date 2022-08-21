@@ -77,7 +77,6 @@ function NewCategory() {
         const isError = handleValidate()
         const formData = new FormData()
         formData.append('file', thumb)
-        console.log(formData)
         const fechAPI = async () => {
             const filesName = await request.uploadfiles(formData)
             const result = await postCategory({ title, thumbnail: filesName })

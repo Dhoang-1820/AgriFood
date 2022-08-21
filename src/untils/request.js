@@ -33,7 +33,7 @@ export const uploadfiles = async (file) => {
     }
 }
 
-export const getImages = async (filename) => {
+export const getImages = (filename) => {
     return request.defaults.baseURL + `uploadfiles/files/${filename}`
 }
 
